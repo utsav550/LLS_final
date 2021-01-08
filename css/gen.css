@@ -1,0 +1,306 @@
+            .hiring {
+                width: 100%;
+                height: 30vh;
+                position: relative;
+                margin-top: 0;
+            }
+            
+            .bg-2 {
+                background-color: #373b4d;
+                color: #ffffff;
+                height: 100%;
+            }
+            
+            .container-fluid {
+                padding-top: 70px;
+                padding-bottom: 70px;
+            }
+            
+            .hiring h3 {
+                font-size: 90px;
+            }
+            
+            .hiring button {
+                margin-top: 40px;
+                border-radius: 4px;
+                background-color: #f4511e;
+                border: none;
+                color: #FFFFFF;
+                text-align: center;
+                font-size: 28px;
+                padding: 10px;
+                width: 200px;
+                transition: all 0.5s;
+                cursor: pointer;
+            }
+            
+            .hiring button span {
+                cursor: pointer;
+                display: inline-block;
+                position: relative;
+                transition: 0.5s;
+            }
+            
+            .hiring button span:after {
+                content: '\00bb';
+                position: absolute;
+                opacity: 0;
+                top: 0;
+                right: -20px;
+                transition: 0.5s;
+            }
+            
+            .hiring button:hover span {
+                padding-right: 25px;
+            }
+            
+            .hiring button:hover span:after {
+                opacity: 1;
+                right: 0;
+            }
+            
+            @media screen and (max-width: 600px) {
+                .hiring {
+                    margin-top: 0vh;
+                    width: 100%;
+                    height: 30vh;
+                    position: relative;
+                }
+                .hiring h3 {
+                    font-size: 30px;
+                    margin-top: -30px;
+                }
+                .hiring button {
+                    border-radius: 4px;
+                    margin-top: 30px;
+                    background-color: #f4511e;
+                    border: none;
+                    color: #FFFFFF;
+                    text-align: center;
+                    font-size: 20px;
+                    padding: 5px;
+                    width: 160px;
+                    transition: all 0.5s;
+                    cursor: pointer;
+                    transition: 0.5s;
+                    content: '\00bb';
+                    top: 0px;
+                    right: -20px;
+                    transition: 0.5s;
+                }
+            }
+            
+            .column {
+                float: left;
+                width: 25%;
+                padding: 0 5px;
+            }
+            
+            .row {
+                margin: 0px -5px;
+            }
+            /* Clear floats after the columns */
+            
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            /* Responsive columns */
+            
+            @media screen and (max-width: 600px) {
+                .column {
+                    width: 100%;
+                    display: block;
+                    margin-bottom: 10px;
+                    height: 300px;
+                }
+            }
+            /* Style the counter cards */
+            
+            .card {
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                padding: 16px;
+                text-align: center;
+                background-color: #373b4d;
+                color: white;
+                height: 300px;
+            }
+            
+            #ic {
+                font-size: 30px;
+            }
+            
+            .fa {
+                font-size: 60px;
+            }
+            
+            h3 {
+                font-size: 50px;
+            }
+            
+            p {
+                font-size: 40px;
+            }
+            
+            .card:hover {
+                background-color: black;
+                height: 300px;
+                border-radius: 10%;
+                transition: 1s;
+            }
+            
+            .f:hover {
+                font-size: 60px;
+            }
+            
+            h3:hover {
+                font-size: 50px;
+            }
+            
+            p:hover {
+                font-size: 40px;
+            }
+            /* testimonial css ----------------------------------------------------------------------*/
+            
+            .container {
+                border: 2px solid #ccc;
+                background-color: #373b4d;
+                border-radius: 5px;
+                padding: 16px;
+                margin: 0px 0;
+                width: 100%;
+                margin-left: 0%;
+                height: 200px;
+                border-radius: 0px 90px;
+                float: top;
+            }
+            
+            #firstcont {
+                border-radius: 90px 0px;
+            }
+            
+            #firstcont:hover {
+                border-radius: 0px 90px;
+            }
+            
+            .container:hover {
+                border-radius: 90px 0px;
+                transition: 1s;
+                color: orangered;
+                background-color: orangered;
+            }
+            
+            .container::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+            
+            .container img {
+                float: left;
+                margin-right: 30px;
+                border-radius: 50%;
+                height: 150px;
+                width: 150px;
+            }
+            
+            .container span {
+                font-size: 30px;
+                margin-right: 15px;
+                color: white;
+            }
+            
+            .container p {
+                font-size: 20px;
+                margin-right: 15px;
+                color: white;
+            }
+            
+            @media (max-width: 500px) {
+                .container {
+                    text-align: center;
+                    margin-left: 0%;
+                    width: 100%;
+                    border-radius: 20px;
+                }
+                #firstcont {
+                    border-radius: 20px;
+                }
+                .container span {
+                    font-size: 22px
+                }
+                .container p {
+                    font-size: 15px
+                }
+                ;
+                .container img {
+                    margin: auto;
+                    float: none;
+                    display: block;
+                }
+            }
+            /*--------about us-------------*/
+            
+            .about-section {
+                padding: 50px;
+                text-align: center;
+                background-color: #000000;
+                color: white;
+            }
+            
+            .about-section p {
+                text-align: center;
+                font-size: 25px;
+            }
+            
+            @media (max-width: 500px) {
+                .about-section p {
+                    text-align: center;
+                    font-size: 10px;
+                }
+            }
+            /*----------------------------- google map -----------------------*/
+            
+            .address {
+                width: 100%;
+                height: 500px;
+                background-color: orangered;
+            }
+            
+            .address h1 {
+                text-align: center;
+                font-size: 100px;
+                padding-top: 120px;
+                font-weight: bolder;
+                font-family: Arial, Helvetica, sans-serif
+            }
+            
+            .address .cont {
+                width: 50%;
+                height: 500px;
+                float: left;
+            }
+            
+            .map {
+                max-width: 100%;
+                overflow: hidden;
+                color: red;
+                width: 50%;
+                height: 500px;
+            }
+            
+            @media (max-width: 500px) {
+                .address {
+                    height: 500px;
+                    background-color: orangered;
+                }
+                .address .cont {
+                    visibility: hidden;
+                    height: 0px;
+                    float: left;
+                }
+                .map {
+                    width: 100%;
+                }
+            }
