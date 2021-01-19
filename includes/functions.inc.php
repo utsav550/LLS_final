@@ -125,13 +125,15 @@ function loginuser($conn, $email, $pwd) {
     if (password_verify($pwd, $pwdhashed)) {
 
         session_start();
-        echo $_SESSION["email"];
-        echo $_SESSION["fname"];
+        
         $_SESSION["email"] = $emailexist["email"];
         $_SESSION["fname"] = $emailexist["fname"];
         $_SESSION["lname"] = $emailexist["lname"];
+        echo $_SESSION["email"];
+        echo $_SESSION["fname"];
+       
         
-         header("Location: ../index.php?msg=welcome");
+         header("Location: ../userDashboard.php?msg=welcome");
     } else {
 
         header("Location: ../Log-in.php?error=wronglogin");

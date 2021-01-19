@@ -39,11 +39,11 @@
     
     <body>
 
-<h2>Login Form</h2>
+        <h2 style="text-align: center">Log In</h2>
 
 <form action="includes/log-in.inc.php" method="post">
   <div class="imgcontainer">
-    <img src="img_avatar2.png" alt="Avatar" class="avatar">
+      <img src="img/logo.png" alt="Avatar" class="avatar">
   </div>
 
   <div class="container">
@@ -61,6 +61,8 @@
 
   <div class="container" style="background-color:#f1f1f1">
     <button type="button" class="cancelbtn">Cancel</button>
+    
+    <h3>Don't have account? <a href="Registration.php">create here</a></h3>
     <span class="psw">Forgot <a href="#">password?</a></span>
   </div>
 </form>

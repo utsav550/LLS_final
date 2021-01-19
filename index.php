@@ -44,13 +44,14 @@ include_once 'includes/dbh.inc.php';
     </div>
     <div class="hiring">
         <div class="container-fluid bg-2 text-center">
-            <h3>We Are Hiring!!</h3>
+            <h3 class="hire">We Are Hiring!!</h3>
 
             <button class=""><span>Apply Now</span> </button>
 
 
         </div>
     </div>
+    <div style="padding-top: -20px">
     <h2 style="text-align: center;font-size: 50px; font-weight: bolder;">Our Archivemnets</h2>
     <div class="row">
         <div class="column">
@@ -79,11 +80,12 @@ include_once 'includes/dbh.inc.php';
 
         <div class="column">
             <div class="card">
-                <p><i class="fa fa-coffee"></i></p>
+                <p><i class="fa fa-usd" aria-hidden="true"></i></p>
                 <h3>$25/hr</h3>
                 <p>Minimum Pay Rate</p>
             </div>
         </div>
+    </div>
     </div>
 
     <h2 style="text-align: center;font-size: 50px; font-weight: bolder;">Testimonials</h2>
