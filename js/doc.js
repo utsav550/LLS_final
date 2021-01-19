@@ -10,4 +10,3 @@ $(document).ready(function() {
         autoPlay: true
     });
 });
-License Terms

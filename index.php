@@ -1,9 +1,13 @@
+<?php 
+include_once 'includes/dbh.inc.php';
 
+?>
 <!DOCTYPE html>
 <html>
 
+
 <head>
-    <script type="text/javascript" src="/js/myFunction.js"></script>
+    <script type="text/javascript" src="js/myFunction.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -15,6 +19,7 @@
     <title>lockyer labour solution</title>
 </head>
 
+
 <body>
 
     <div class="topnav" id="myTopnav">
@@ -23,10 +28,10 @@
         <a href="index.php" id="logo">
             <h1 id="lg"><span>L</span>ockyer <span>L</span>abour <span>S</span>olution</h1>
         </a>
-        <a href="index.html" class="active" id="first">Home</a>
+        <a href="index.php" class="active" id="first">Home</a>
         <a href="#news">Log-in</a>
         <a href="#news">Gallery</a>
-        <a href="#news">Apply</a>
+        <a href="Registration.php">Apply</a>
         <a href="#contact">Contact</a>
         <a href="#about">About</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -86,13 +91,13 @@
 
 
     <div class="container" id="firstcont">
-        <img src="/img/logo.png" alt="Avatar">
+        <img src="img/logo.png" alt="Avatar">
         <p><span> Tim Linan</span><br> Farmer At Maragi</p>
         <p>"Content goes here..."</p>
     </div>
 
     <div class="container">
-        <img src="/img/logo.png" alt="Avatar">
+        <img src="img/logo.png" alt="Avatar">
         <p><span>Karl.  <br></span> Manager At Maragi</p>
         <p>"Content goes here............."</p>
     </div>
