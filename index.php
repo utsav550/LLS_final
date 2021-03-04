@@ -30,7 +30,7 @@ include_once 'includes/dbh.inc.php';
         </a>
         <a href="index.php" class="active" id="first">Home</a>
         <a href="#news">Log-in</a>
-        <a href="#news">Gallery</a>
+        <a href="gallery.php">Gallery</a>
         <a href="Registration.php">Apply</a>
         <a href="#contact">Contact</a>
         <a href="#about">About</a>
@@ -52,7 +52,7 @@ include_once 'includes/dbh.inc.php';
         </div>
     </div>
     <div style="padding-top: -20px">
-    <h2 style="text-align: center;font-size: 50px; font-weight: bolder;">Our Archivemnets</h2>
+    <h2 style="text-align: center;font-size: 50px; font-weight: bolder;">Our Achievements</h2>
     <div class="row">
         <div class="column">
             <div class="card">
@@ -74,7 +74,7 @@ include_once 'includes/dbh.inc.php';
             <div class="card">
                 <p><i class="fa fa-smile-o"></i></p>
                 <h3>6+</h3>
-                <p>Diffrent Jobs </p>
+                <p>Different Jobs </p>
             </div>
         </div>
 
