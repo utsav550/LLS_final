@@ -80,7 +80,7 @@ body {
             <h1 id="lg"><span>L</span>ockyer <span>L</span>abour <span>S</span>olution</h1>
         </a>
         <a href="index.php"  id="first">Home</a>
-        <a href="#news">Log-in</a>
+        <a href="Log-in.php">Log-in</a>
         <a href="gallery.php"class="active">Gallery</a>
         <a href="Registration.php">Apply</a>
         <a href="#contact">Contact</a>

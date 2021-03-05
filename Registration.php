@@ -26,7 +26,7 @@
             </a>
             <a href="index.php" id="first">Home</a>
             <a href="Log-in.php">Log-in</a>
-            <a href="#news">Gallery</a>
+            <a href="gallery.php">Gallery</a>
             <a href="Registration.php" class="active" >Apply</a>
             <a href="#contact">Contact</a>
             <a href="#about">About</a>

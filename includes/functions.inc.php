@@ -10,6 +10,16 @@ function emptyInputSignup($fname, $email, $lname, $pwd, $repwd, $mobile) {
     }
     return $result;
 }
+function emptyInputchange($fname, $email, $lname, $pwd, $mobile) {
+    $result;
+    if (empty($fname) || empty($lname) || empty($email) || empty($mobile) || empty($pwd) || empty($repwd)) {
+        $result = true;
+        echo 'passed';
+    } else {
+        $result = false;
+    }
+    return $result;
+}
 
 function invalidusername($fname, $lname) {
     $result;
@@ -129,11 +139,12 @@ function loginuser($conn, $email, $pwd) {
         $_SESSION["email"] = $emailexist["email"];
         $_SESSION["fname"] = $emailexist["fname"];
         $_SESSION["lname"] = $emailexist["lname"];
+        $_SESSION["emp_id"] = $emailexist["emp_id"];
         echo $_SESSION["email"];
         echo $_SESSION["fname"];
        
         
-         header("Location: ../userDashboard.php?msg=welcome");
+         header("Location: ../userDash/index.php?msg=welcome");
     } else {
 
         header("Location: ../Log-in.php?error=wronglogin");

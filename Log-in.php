@@ -27,8 +27,8 @@
             <h1 id="lg"><span>L</span>ockyer <span>L</span>abour <span>S</span>olution</h1>
         </a>
         <a href="index.php" id="first">Home</a>
-        <a href="log-out.inc.php" class="active" >Log-in</a>
-        <a href="#news">Gallery</a>
+        <a href="log-out.inc.php" class="active" >Log-out</a>
+        <a href="gallery.php">Gallery</a>
         <a href="Registration.php" >Apply</a>
         <a href="#contact">Contact</a>
         <a href="#about">About</a>
