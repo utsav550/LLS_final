@@ -47,6 +47,6 @@ mysqli_query($conn, $sql);
 if (mysqli_query($conn, $sql)) {
     header("Location:  register.php?error=chnagedsuccessfully");
   } else {
-    echo "Error updating record: " . mysqli_error($conn);
+    echo "there is  Error while updating record: " . mysqli_error($conn);
   }
 }

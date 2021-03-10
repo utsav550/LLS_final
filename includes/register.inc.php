@@ -7,7 +7,7 @@ if (isset($_POST["submit"])) {
     $mobile = $_POST["mobile"];
     $pwd = $_POST["pwd"];
     $repwd = $_POST["repwd"];
-
+    
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
 

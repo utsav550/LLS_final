@@ -85,7 +85,7 @@ function emailexist($conn, $email) {
 
 function createuser($conn, $fname, $lname, $email, $mobile, $pwd) {
 
-    $sql = "INSERT INTO register (`fname`, `lname`, `email`, `mobile`, `password`) VALUES (?,?,?,?,?)";
+    $sql = "INSERT INTO register (`fname`, `lname`, `email`, `mobile`, `password`, `approval` ) VALUES (?,?,?,?,?,?)";
 
     $stmt = mysqli_stmt_init($conn);
 
@@ -97,7 +97,8 @@ function createuser($conn, $fname, $lname, $email, $mobile, $pwd) {
 
 
     $hashedpwd = password_hash($pwd, PASSWORD_DEFAULT);
-    mysqli_stmt_bind_param($stmt, "sssss", $fname, $lname, $email, $mobile, $hashedpwd);
+    $approval = 'new';
+    mysqli_stmt_bind_param($stmt, "ssssss", $fname, $lname, $email, $mobile, $hashedpwd, $approval);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 
@@ -152,3 +153,27 @@ function loginuser($conn, $email, $pwd) {
         exit();
     }
 }
+function addpi($conn, $commdate, $gender, $dob, $tfn, $address, $sub, $state, $zip) {
+
+    $sql = "INSERT INTO register (`fname`, `lname`, `email`, `mobile`, `password`, `approval` ) VALUES (?,?,?,?,?,?)";
+
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("Location: ../Registration.php?error=faild");
+        exit();
+    }
+
+
+    $hashedpwd = password_hash($pwd, PASSWORD_DEFAULT);
+    $approval = 'new';
+    mysqli_stmt_bind_param($stmt, "ssssss", $fname, $lname, $email, $mobile, $hashedpwd, $approval);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+
+    header("Location: ../Log-in.php?success");
+}
+
+
