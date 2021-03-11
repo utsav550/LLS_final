@@ -303,7 +303,7 @@ if (empty($username)) {
                 <?php echo$username;?>
                 </h3>
                 </span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <img class="img-profile rounded-circle" src="https://media.istockphoto.com/vectors/avatar-icon-vector-id1177086178">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
