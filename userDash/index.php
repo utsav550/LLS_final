@@ -3,6 +3,7 @@
 
 include('includes/header.php');
 include('includes/navbar.php');
+include('includes/checkdata.php');
 if (isset($_GET["error"])) {
   if ($_GET["error"] == "exist") {
 
@@ -22,7 +23,15 @@ if (isset($_GET["error"])) {
   if ($_GET["error"] == "alreadyexixt") {
     echo "Error: Email already exist. Please Log-in.</p>";
   }
+  if ($_GET["error"] == "passportnotuploaded") {
+    $message = "file not uploaded. please choose PDF file.";
+    echo "<script type='text/javascript'>alert('$message');</script>";
+  }
 }
+
+
+
+
 
 ?>
 
@@ -48,7 +57,7 @@ if (isset($_GET["error"])) {
               <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Document Update required</div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
 
-                <h4> 0</h4>
+                <h4> <?php          echo $docupdate;        ?></h4>
 
               </div>
             </div>
@@ -128,9 +137,31 @@ if (isset($_GET["error"])) {
       $('#mymodall').modal('show');
     });
   </script>
+
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800"> Documentation</h1>
+
+  </div>
   <button type="button" class="btn btn-primary" id="piinfo" data-toggle="modal" data-target="#exampleModalCenter">
     Personal information
   </button>
+  <button type="button" class="btn btn-primary" id="piinfo" data-toggle="modal" data-target="#exampleModalCenterbank">
+    Bank information
+  </button>
+  <button type="button" class="btn btn-primary" id="superinfo" data-toggle="modal" data-target="#exampleModalCentersi">
+    Superannuation information
+  </button>
+  <button type="button" class="btn btn-primary" id="superinfo" data-toggle="modal" data-target="#exampleModalCentervi">
+    Visa information
+  </button>
+  <button type="button"  <?php if($passfile != 1) { echo'style="background-color: red"';} ?> class="btn btn-primary" id="superinfo" data-toggle="modal" data-target="#uploadModalpass">
+    Passport Copy
+  </button>
+  <button  <?php if($visafile != 1) { echo'style="background-color: red"';} ?> type="button" class="btn btn-primary" id="superinfo" data-toggle="modal" data-target="#uploadModalvisa">
+    Visa Copy
+  </button>
+
+
 
   <!-------------------------------------------------------------------- Modals ------------------------------------------------------------------>
   <!-------------------------------------------------------------------- personal info modal ------------------------------------------------------------------>
@@ -199,6 +230,301 @@ if (isset($_GET["error"])) {
       </div>
     </div>
   </div>
+
+
+  <!-------------------------------------------------------------------- Bank info modal ------------------------------------------------------------------>
+  <div class="modal fade" id="exampleModalCenterbank" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Bank Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="includes/scripts.php" method="POST">
+            <div class="form-row">
+
+              <label for="inputAddress">Account Name</label>
+              <input type="text" class="form-control" id="inputAddress" name="acname" placeholder="David Munro" required>
+
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="inputPassword4">BSB</label>
+                  <input type="text" class="form-control" id="inputPassword4" name="bsb" placeholder="123 456 " required>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="inputPassword4">Account Number</label>
+                  <input type="text" class="form-control" id="inputPassword4" name="acn" placeholder="1234 5678" required>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputState">Pay Day</label>
+                <select id="inputState" class="form-control" name="pd" required>
+                  <option selected>Friday</option>
+
+
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputState">Pay Period</label>
+                <select id="inputState" class="form-control" name="pp" required>
+                  <option selected>Weekly</option>
+
+
+                </select>
+              </div>
+
+            </div>
+            <div class="form-group col-md-4">
+              <label for="inputState"> Australian citizen? </label>
+              <select id="inputState" class="form-control" name="ac" required>
+                <option selected>No</option>
+                <option>Yes</option>
+
+
+              </select>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" name="addbi">Save changes</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-------------------------------------------------------------------- super info modal ------------------------------------------------------------------>
+
+  <div class="modal fade" id="exampleModalCentersi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Superannuation Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="includes/scripts.php" method="POST">
+            <div class="form-group col-md-20">
+              <label for="inputPassword4">Superannuation Member Number</label>
+              <input type="text" class="form-control" id="inputPassword4" name="smn" placeholder="1243 45346 7849" required>
+            </div>
+            <div class="form-group col-md-20">
+              <label for="inputZip">Fund Name</label>
+              <input type="text" name="fundname" class="form-control" id="inputZip" placeholder="Sunsuper" required>
+            </div>
+            <div class="form-group col-md-20">
+              <label for="inputPassword4">Policy Number</label>
+              <input type="text" class="form-control" id="inputPassword4" name="pn" placeholder="1243 46 7849" required>
+            </div>
+            <div class="form-group col-md-20  ">
+              <label for="inputPassword4">Employee Identifiaction Number</label>
+              <input type="text" class="form-control" id="inputPassword4" name="ein" placeholder="1243 45346 7849" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-20">
+                <label for="inputZip">Account Name</label>
+                <input type="text" name="eacn" class="form-control" id="inputZip" placeholder="David munro" required>
+              </div>
+              <div class="form-group col-md-20">
+                <label for="inputZip">Uniqe Super ID</label>
+                <input type="text" name="usid" class="form-control" id="inputZip" placeholder="1243  7849" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">Fund ABN</label>
+                <input type="text" class="form-control" id="inputPassword4" name="FABN" placeholder="123 456 789" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">Fund Phone</label>
+                <input type="text" class="form-control" id="inputPassword4" name="phone" placeholder="098 436 435" required>
+              </div>
+            </div>
+            <div class="form-group">
+
+              <label for="inputAddress">Address</label>
+              <input type="text" class="form-control" id="inputAddress" name="address" placeholder="1234 Main St" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputCity">City</label>
+                <input type="text" class="form-control" name="sub" id="inputCity" required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputCity">state</label>
+                <input type="text" class="form-control" name="State" id="inputCity" required>
+              </div>
+              <div class="form-group col-md-2">
+                <label for="inputZip">Zip</label>
+                <input type="text" name="zip" class="form-control" id="inputZip" required>
+              </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" name="addsi">Save changes</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-------------------------------------------------------------------- super info modal ------------------------------------------------------------------>
+
+  <div class="modal fade" id="exampleModalCentervi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Visa Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="includes/scripts.php" method="POST">
+            <div class="form-group col-md-6">
+              <label for="inputState"> Australian citizen? </label>
+              <select id="inputState" class="form-control" name="ac" required>
+                <option selected>No</option>
+                <option>Yes</option>
+
+
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputState"> Australian PR? </label>
+              <select id="inputState" class="form-control" name="apr" required>
+                <option selected>No</option>
+                <option>Yes</option>
+
+
+              </select>
+            </div>
+
+            <div class="form-group col-md-10">
+              <label for="inputPassword4">Passport Number</label>
+              <input type="text" class="form-control" id="inputPassword4" name="pn" placeholder="1243 46 7849" required>
+            </div>
+            <div class="form-group col-md-10">
+              <label for="inputZip">Country of issued?</label>
+              <input type="text" name="country" class="form-control" id="inputZip" placeholder="country" required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="inputState"> Work permited? </label>
+              <select id="inputState" class="form-control" name="wp" required>
+                <option selected>No</option>
+                <option>Yes</option>
+
+
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-20">
+                <label for="inputZip">Visa type</label>
+                <input type="text" name="type" class="form-control" id="inputZip" placeholder="Student" required>
+              </div>
+              <div class="form-group col-md-20">
+                <label for="inputZip">Visa Sub Class</label>
+                <input type="text" name="subclass" class="form-control" id="inputZip" placeholder="500" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">Visa Grant Number</label>
+                <input type="text" class="form-control" id="inputPassword4" name="grantnumber" placeholder="123 456 789" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">Course Duration</label>
+                <input type="text" class="form-control" id="inputPassword4" name="duration" placeholder="2 year" required>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label for="inputEmail4">Expiry Date</label>
+                <input type="date" class="form-control" id="inputEmail4" name="exdate" placeholder="Expiry Date" required>
+              </div>
+
+            </div>
+
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputCity">Working Hours</label>
+                <input type="text" class="form-control" name="hours" id="inputCity" required>
+              </div>
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" name="addvi">Save changes</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-------------------------------------------------------------------- passport modal ------------------------------------------------------------------>
+  <div id="uploadModalpass" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <h4 class="modal-title">Upload Passport</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- Form -->
+          <form action="includes/scripts.php" method="POST" enctype="multipart/form-data">
+            Select file : <input type='file' name='file' id='file' class='form-control'><br>
+            <input type='submit' class='btn btn-info' value='Upload' name="pass" id='btn_upload'>
+          </form>
+
+          <!-- Preview-->
+          <div id='preview'></div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <div id="uploadModalvisa" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <h4 class="modal-title">Upload Visa</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- Form -->
+          <form action="includes/scripts.php" method="POST" enctype="multipart/form-data">
+            Select file : <input type='file' name='file' id='file' class='form-control'><br>
+            <input type='submit' class='btn btn-info' value='Upload' name="visa" id='btn_upload'>
+          </form>
+
+          <!-- Preview-->
+          <div id='preview'></div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
 
 
 
