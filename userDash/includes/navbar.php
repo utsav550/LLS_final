@@ -95,18 +95,21 @@ if (empty($username)) {
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
     <i class="fas fa-fw fa-folder"></i>
-    <span>Pages</span>
+    <span>Document</span>
   </a>
   <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
-      <h6 class="collapse-header">Login Screens:</h6>
-      <a class="collapse-item" href="login.php">Login</a>
-      <a class="collapse-item" href="register.php">Register</a>
-      <a class="collapse-item" href="forgot-password.php">Forgot Password</a>
+    
+      <h6 class="collapse-header">Form :</h6>
+      <a class="collapse-item" id="piinfo" data-toggle="modal" data-target="#exampleModalCenter">Personal Information</a>
+      <a class="collapse-item" id="piinfo" data-toggle="modal" data-target="#exampleModalCenterbank">Bank Information</a>
+      <a class="collapse-item" id="superinfo" data-toggle="modal" data-target="#exampleModalCentersi">Superannuation Info</a>
+      <a class="collapse-item"id="superinfo" data-toggle="modal" data-target="#exampleModalCentervi">Visa Information</a>
       <div class="collapse-divider"></div>
-      <h6 class="collapse-header">Other Pages:</h6>
-      <a class="collapse-item" href="404.html">404 Page</a>
-      <a class="collapse-item" href="blank.html">Blank Page</a>
+      <h6 class="collapse-header">Uploads</h6>
+     
+      <a class="collapse-item" <?php if($passfile != 1) { echo'style="color: red"';} ?> class="btn btn-primary" id="superinfo" data-toggle="modal" data-target="#uploadModalpass">Passport Copy</a>
+      <a class="collapse-item"  <?php if($visafile != 1) { echo'style="color: red"';} ?> type="button" class="btn btn-primary" id="superinfo" data-toggle="modal" data-target="#uploadModalvisa">Visa Copy</a>
     </div>
   </div>
 </li>
@@ -200,15 +203,16 @@ if (empty($username)) {
                 </h6>
                
                 <?php
-                if (empty($visafile)) {
-                  $sql = "SELECT * FROM `notify`  WHERE emp_id = ?";
+                  $ncp =5;
+                  $ncv = 6;
+                  $sql = "SELECT * FROM `notify`  WHERE emp_id = ? AND notifycode = ? OR notifycode = ?";
                   $stmt = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
             
                     header("../index.php?error=notready");
                     exit();
                 }
-                mysqli_stmt_bind_param($stmt, "s", $empid);
+                mysqli_stmt_bind_param($stmt, "sss", $empid,$ncp,$ncv);
                 mysqli_stmt_execute($stmt);
             
                 $resultdata = mysqli_stmt_get_result($stmt);
@@ -236,68 +240,84 @@ if (empty($username)) {
 
                 }
               }
-            }
+            
 
 
 
 ?>
                
             </li>
-
+            <?php
+                  $nc =1;
+                 
+                  $sql = "SELECT * FROM `notify`  WHERE emp_id = ? AND notifycode = ?";
+                  $stmt = mysqli_stmt_init($conn);
+                if (!mysqli_stmt_prepare($stmt, $sql)) {
+            
+                    header("../index.php?error=notready");
+                    exit();
+                }
+                mysqli_stmt_bind_param($stmt, "ss", $empid,$nc);
+                mysqli_stmt_execute($stmt);
+            
+                $resultdata = mysqli_stmt_get_result($stmt);
+                $count = mysqli_num_rows($resultdata);
+                ?>
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
+                <span class="badge badge-danger badge-counter"> <?php echo $count; ?></span>
               </a>
               <!-- Dropdown - Messages -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
                   Message Center
                 </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                    <div class="status-indicator"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-                    <div class="status-indicator bg-warning"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
+                <?php
+                  $nc =1;
+                 
+                  $sql = "SELECT * FROM `notify`  WHERE emp_id = ? AND notifycode = ?";
+                  $stmt = mysqli_stmt_init($conn);
+                if (!mysqli_stmt_prepare($stmt, $sql)) {
+            
+                    header("../index.php?error=notready");
+                    exit();
+                }
+                mysqli_stmt_bind_param($stmt, "ss", $empid,$nc);
+                mysqli_stmt_execute($stmt);
+            
+                $resultdata = mysqli_stmt_get_result($stmt);
+                $count = mysqli_num_rows($resultdata);
+                for($i=0;$i<$count;$i++){
+                if ($row = mysqli_fetch_assoc($resultdata)) {
+                  $msg = $row["msg"];
+                  $date = $row["notify_date"];
+                  $code = $row["notifycode"];
+                 
+                
+                
+                
+                  echo' <a class="dropdown-item d-flex align-items-center" href="index.php">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-success">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
                   </div>
                   <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                    <div class="small text-gray-500">'.$date.'</div>
+                    <span class="font-weight-bold">'. $msg.'</span>
                   </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-              </div>
+                </a>';
+
+                }
+              }
+            
+
+
+
+?>
             </li>
 
             <div class="topbar-divider d-none d-sm-block"></div>
@@ -314,18 +334,11 @@ if (empty($username)) {
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="register.php">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
+               
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -368,6 +381,73 @@ if (empty($username)) {
 
 
         </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Personal Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="includes/scripts.php" method="POST">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputEmail4">Commencement Date</label>
+                <input type="date" class="form-control" id="inputEmail4" name="commdate" placeholder="Commencement Date" required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputState">Gender</label>
+                <select id="inputState" class="form-control" name="gender" required>
+                  <option selected>Choose...</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">TFN</label>
+                <input type="text" class="form-control" id="inputPassword4" name="tfn" placeholder="123 456 789" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-group col-md-6">
+                <label for="inputEmail4">Date of Birth</label>
+                <input type="date" class="form-control" id="inputEmail4" name="dob" placeholder="Date of Birth" required>
+              </div>
+              <label for="inputAddress">Address</label>
+              <input type="text" class="form-control" id="inputAddress" name="address" placeholder="1234 Main St" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputCity">City</label>
+                <input type="text" class="form-control" name="sub" id="inputCity" required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputState">State</label>
+                <select id="inputState" name="state" class="form-control" required>
+                  <option selected>Choose...</option>
+                  <option> QLD</option>
+                </select>
+              </div>
+              <div class="form-group col-md-2">
+                <label for="inputZip">Zip</label>
+                <input type="text" name="zip" class="form-control" id="inputZip" required>
+              </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" name="addpi">Save changes</button>
+        </div>
+        </form>
       </div>
     </div>
   </div>

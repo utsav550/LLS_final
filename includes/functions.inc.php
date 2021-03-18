@@ -108,7 +108,7 @@ function createuser($conn, $fname, $lname, $email, $mobile, $pwd) {
 
 // log-in functions 
 
-function emptyInputlogin($email, $pwd,) {
+function emptyInputlogin($email, $pwd) {
     $result;
     if (empty($email) || empty($pwd)) {
         $result = true;
@@ -134,8 +134,32 @@ function loginuser($conn, $email, $pwd) {
 
 
     if (password_verify($pwd, $pwdhashed)) {
-
+        $adminemail = "jaygogagatton@gmail.com";
+        $adminn = $emailexist["email"];
         session_start();
+        if($adminn == $adminemail){
+
+            $sql = "SELECT * FROM admin WHERE admin_email = ?;";
+            $stmt = mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+        
+                header("../Registeration.php?error=faild");
+                exit();
+            }
+            mysqli_stmt_bind_param($stmt, "s", $adminn);
+            mysqli_stmt_execute($stmt);
+        
+            $resultdata = mysqli_stmt_get_result($stmt);
+            if ($row = mysqli_fetch_assoc($resultdata)) {
+                $_SESSION["email"] = $row["admin_email"];
+                $_SESSION["fname"] = $row["admin_name"];
+                $_SESSION["adminid"] = $row["admin_id"];
+            }
+
+            header("Location: ../admin/index.php?admin=admin");
+            exit();
+
+        }
         
         $_SESSION["email"] = $emailexist["email"];
         $_SESSION["fname"] = $emailexist["fname"];

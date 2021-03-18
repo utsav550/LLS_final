@@ -259,7 +259,7 @@
                 mysqli_stmt_bind_param($stmt, "sssssssssssss", $smn, $empid, $fundname, $pn, $ein, $FABN, $address, $sub, $state, $zip, $phone, $usid, $eacn);
                 mysqli_stmt_execute($stmt);
                 $notifycode =4;
-                
+                    
                 $sql2 = "DELETE FROM `notify` WHERE `emp_id` = '$empid' AND `notifycode` = '$notifycode'";
                 $stmt = mysqli_stmt_init($conn);
                 mysqli_stmt_prepare($stmt, $sql2);
@@ -332,6 +332,14 @@
                 mysqli_stmt_bind_param($stmt, "ssssssssssss", $empid, $ac, $apr, $pn, $country, $wp, $type, $subclass, $grantnumber, $exdate, $duration, $hours);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
+                $notifycode =4;
+                    
+                $sql2 = "DELETE FROM `notify` WHERE `emp_id` = '$empid' AND `notifycode` = '$notifycode'";
+                $stmt = mysqli_stmt_init($conn);
+                mysqli_stmt_prepare($stmt, $sql2);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_close($stmt);
+                header("Location:../index.php?msg=sisaved");
                 header("Location:../index.php?msg=sisaved");
             }
         }
