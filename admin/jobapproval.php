@@ -541,7 +541,12 @@ $rgdate = $row["reg_date"];
 
 </div>
 </div>
-<a href="javascript:void(0)" class="btn btn-primary btn-sm">Approve</a>&nbsp;
-<a href="javascript:void(0)" class="btn btn-default btn-sm">Decline</a>&nbsp;
+<form action="includes/accept.php" method="post">
+    <div class="modal-footer">
+        <input name="jid" value="<?php  echo $jempid;?>" ></input>
+        <a  action="mailto:utsavp550@gmail.com" href="mailto:<?php echo $email;?>?subject=Lockyer Labour Solution">Contact</a>
+        <button type="submit" class="btn btn-secondary" name="decline">Decline</button>
+        <button type="submit" class="btn btn-primary" name="approve">Approve</button>
+    </div>
 
-</div>
+    </div>
