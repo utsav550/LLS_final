@@ -3,7 +3,7 @@
 session_start();
 $username = $_SESSION["fname"];
 $email = $_SESSION["email"];
-$empid = $_SESSION["emp_id"];
+
 $adminid =$_SESSION["adminid"];
 if (empty($username)) {
 
@@ -14,25 +14,6 @@ if (empty($username)) {
     require_once '../includes/functions.inc.php';
     
 
-    $sql = " SELECT * FROM register WHERE emp_id = $empid ";
-   
-    
-   $result = mysqli_query($conn, $sql);
-   $result_check = mysqli_num_rows($result);
-      // output data of each row
-      if ($result_check > 0) {
-      while($row = mysqli_fetch_assoc($result)) {
-        $empid = $row["emp_id"];
-        $fname = $row["fname"];
-        $lname =  $row["lname"];
-        $mobile = $row["mobile"];
-        $email = $row["email"];
-      }
-    
-  }
-  else {
-
-    echo "0 results";}
     
    
     ?>   
@@ -75,7 +56,7 @@ if (empty($username)) {
 <li class="nav-item">
   <a class="nav-link" href="register.php">
     <i class="fas fa-fw fa-chart-area"></i>
-    <span>User Profile</span></a>
+    <span>Users Profile managment</span></a>
 </li>
 
 
