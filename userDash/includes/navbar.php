@@ -73,7 +73,7 @@ if (empty($username)) {
 
 <li class="nav-item">
   <a class="nav-link" href="register.php">
-    <i class="fas fa-fw fa-chart-area"></i>
+  <i class="fas fa-user"></i>
     <span>User Profile</span></a>
 </li>
 
@@ -113,6 +113,14 @@ if (empty($username)) {
     </div>
   </div>
 </li>
+
+<li class="nav-item">
+  <a class="nav-link" href="aggrement.php">
+  <i class="fas fa-handshake"></i>
+    <span>User Aggreement</span></a>
+</li>
+
+
 
 <!-- Nav Item - Charts -->
 <li class="nav-item">
