@@ -57,7 +57,7 @@ if (isset($_GET["error"])) {
               <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Document Update required</div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
 
-                <h4> <?php          echo $docupdate;        ?></h4>
+                <h4> <?php echo $docupdate;        ?></h4>
 
               </div>
             </div>
@@ -138,7 +138,7 @@ if (isset($_GET["error"])) {
     });
   </script>
 
-  
+
 
 
 
@@ -280,8 +280,49 @@ if (isset($_GET["error"])) {
 
 
   <!-------------------------------------------------------------------- super info modal ------------------------------------------------------------------>
-
   <div class="modal fade" id="exampleModalCentersi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Superannuation Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <form action="includes/scripts.php" method="POST">
+          <label for="inputPassword4">Are you member of any Superannuation Fund?</label>
+          <div class="form-row">
+          <div class="form-group col-md-4">
+          <button type="button" class="btn btn-primary" style="width:100px" id="superinfo" data-toggle="modal"  data-dismiss="modal" data-target="#exampleModalCentermember">Yes!</button>
+            </div>
+            <div class="form-group col-md-4">
+            <button type="submit" class="btn btn-secondary" name="siinfono"  style="width:100px">No</button>
+         
+            </div>
+           
+            
+           
+            
+
+
+            </div>
+           
+
+
+       
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         
+        </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-------------------------------------------------------------------- super info modal ------------------------------------------------------------------>
+  <div class="modal fade" id="exampleModalCentermember" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -357,8 +398,7 @@ if (isset($_GET["error"])) {
       </div>
     </div>
   </div>
-
-  <!-------------------------------------------------------------------- super info modal ------------------------------------------------------------------>
+  <!-------------------------------------------------------------------- visa info modal ------------------------------------------------------------------>
 
   <div class="modal fade" id="exampleModalCentervi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

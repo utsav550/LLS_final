@@ -106,7 +106,7 @@
                 }
 
                 $emt = '';
-                $notifycode =1;
+                $notifycode = 1;
                 mysqli_stmt_bind_param($stmt, "sssssssssss", $empid, $commdate, $gender,  $dob, $address, $sub, $state, $zip, $tfn, $emt, $emt);
                 mysqli_stmt_execute($stmt);
                 $sql2 = "DELETE FROM `notify` WHERE `emp_id` = '$empid' AND `notifycode` = '$notifycode'";
@@ -114,7 +114,7 @@
                 mysqli_stmt_prepare($stmt, $sql2);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
-                
+
                 header("Location:../index.php?msg=pisaved");
             }
         }
@@ -180,8 +180,8 @@
 
             mysqli_stmt_bind_param($stmt, "sssssss", $empid, $acname, $bsb,  $acn, $ac, $pd, $pp);
             mysqli_stmt_execute($stmt);
-            $notifycode =3;
-            
+            $notifycode = 3;
+
             $sql2 = "DELETE FROM `notify` WHERE `emp_id` = '$empid' AND `notifycode` = '$notifycode'";
             $stmt = mysqli_stmt_init($conn);
             mysqli_stmt_prepare($stmt, $sql2);
@@ -190,6 +190,8 @@
             header("Location:../index.php?msg=bisaved");
         }
     }
+
+    //    adding super info in to the database...............................
     if (isset($_POST['addsi'])) {
         session_start();
         $username = $_SESSION["fname"];
@@ -199,76 +201,8 @@
 
             header("Location:../index.php");
         }
-        $smn = $_POST["smn"];
-        $fundname = $_POST["fundname"];
-        $pn = $_POST["pn"];
-        $ein = $_POST["ein"];
-        $eacn = $_POST["eacn"];
-        $usid = $_POST["usid"];
-        $FABN = $_POST["FABN"];
-        $address = $_POST["address"];
-        $sub = $_POST["sub"];
-        $state = $_POST["State"];
-        $zip = $_POST["zip"];
-        $phone = $_POST["phone"];
-
-        if (empty($smn) || empty($fundname) || empty($pn) || empty($phone) || empty($ein) || empty($eacn) || empty($usid) || empty($FABN) || empty($address) || empty($sub) || empty($state) || empty($zip)) {
-            header("Location: ../index.php?error=empty");
-            echo    'here12345';
-        } else {
-
-
-            require_once '../../includes/dbh.inc.php';
-            require_once '../../includes/functions.inc.php';
-
-            $sql = "SELECT * FROM `super_info` WHERE emp_id = ?;";
-            $stmt = mysqli_stmt_init($conn);
-            if (!mysqli_stmt_prepare($stmt, $sql)) {
-
-                header("../index.php?error=exist");
-                exit();
-                echo 'here1';
-            }
-            mysqli_stmt_bind_param($stmt, "s", $empid);
-            mysqli_stmt_execute($stmt);
-
-            $resultdata = mysqli_stmt_get_result($stmt);
-            if ($row = mysqli_fetch_assoc($resultdata)) {
-                echo 'here12';
-                header("Location: ../index.php?error=exist");
-            } else {
-
-
-                echo 'here123';
-
-                $sql = "INSERT INTO `super_info` (`sup_member_num`, `emp_id`, `fund_name`, `policy_number`, `emp_id_number`, `fund_abn`, `fund_address`, `suburb`, `state`, `postcode`, `fund_phone`, `unique_super_id`, `account_name`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-                $stmt = mysqli_stmt_init($conn);
-
-                if (!mysqli_stmt_prepare($stmt, $sql)) {
-
-                    header("Location:../index.php");
-
-
-
-                    exit();
-                }
-
-
-
-                mysqli_stmt_bind_param($stmt, "sssssssssssss", $smn, $empid, $fundname, $pn, $ein, $FABN, $address, $sub, $state, $zip, $phone, $usid, $eacn);
-                mysqli_stmt_execute($stmt);
-                $notifycode =4;
-                    
-                $sql2 = "DELETE FROM `notify` WHERE `emp_id` = '$empid' AND `notifycode` = '$notifycode'";
-                $stmt = mysqli_stmt_init($conn);
-                mysqli_stmt_prepare($stmt, $sql2);
-                mysqli_stmt_execute($stmt);
-                mysqli_stmt_close($stmt);
-                header("Location:../index.php?msg=sisaved");
-            }
-        }
     }
+
     if (isset($_POST['addvi'])) {
         session_start();
         $username = $_SESSION["fname"];
@@ -332,8 +266,8 @@
                 mysqli_stmt_bind_param($stmt, "ssssssssssss", $empid, $ac, $apr, $pn, $country, $wp, $type, $subclass, $grantnumber, $exdate, $duration, $hours);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
-                $notifycode =4;
-                    
+                $notifycode = 4;
+
                 $sql2 = "DELETE FROM `notify` WHERE `emp_id` = '$empid' AND `notifycode` = '$notifycode'";
                 $stmt = mysqli_stmt_init($conn);
                 mysqli_stmt_prepare($stmt, $sql2);
@@ -348,7 +282,7 @@
     if (isset($_POST['pass'])) {
         session_start();
         require_once '../../includes/dbh.inc.php';
-            require_once '../../includes/functions.inc.php';
+        require_once '../../includes/functions.inc.php';
         $username = $_SESSION["fname"];
         $email = $_SESSION["email"];
         $empid = $_SESSION["emp_id"];
@@ -380,7 +314,6 @@
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
                 header("Location:../index.php?msg=passportuploaded");
-
             }
         }
         header("Location:../index.php?msg=passportuploaded");
@@ -389,7 +322,7 @@
     if (isset($_POST['visa'])) {
         session_start();
         require_once '../../includes/dbh.inc.php';
-            require_once '../../includes/functions.inc.php';
+        require_once '../../includes/functions.inc.php';
         $username = $_SESSION["fname"];
         $email = $_SESSION["email"];
         $empid = $_SESSION["emp_id"];
@@ -420,11 +353,147 @@
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
                 header("Location:../index.php?msg=passportuploaded");
-
             }
         } else {
 
             header("Location:../index.php?error=passportnotuploaded");
         }
     }
-    ?>
+
+    if (isset($_POST['siinfono'])) {
+        session_start();
+        $username = $_SESSION["fname"];
+        $email = $_SESSION["email"];
+        $empid = $_SESSION["emp_id"];
+        $member = 0;
+        if (empty($username)) {
+            header("Location:../index.php");
+        }
+        require_once '../../includes/dbh.inc.php';
+        require_once '../../includes/functions.inc.php';
+
+        $sql = "SELECT * FROM `super_info` WHERE emp_id = ?;";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+            header("../index.php?error=exist");
+            exit();
+            echo 'here1';
+        }
+        mysqli_stmt_bind_param($stmt, "s", $empid);
+        mysqli_stmt_execute($stmt);
+
+        $resultdata = mysqli_stmt_get_result($stmt);
+        if ($row = mysqli_fetch_assoc($resultdata)) {
+            echo 'here12';
+            header("Location: ../index.php?error=exist");
+        } else {
+
+
+
+
+            $sql = "INSERT INTO `super_info`(`emp_id`,`member`) VALUES (?,?)";
+
+            $stmt = mysqli_stmt_init($conn);
+
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+                header("Location:../index.php");
+
+
+
+                exit();
+            }
+
+
+            mysqli_stmt_bind_param($stmt, "ss", $empid, $member);
+            mysqli_stmt_execute($stmt);
+            echo 'herefinal';
+            echo $member;
+            $notifycode = 3;
+
+            $sql2 = "DELETE FROM `notify` WHERE `emp_id` = '$empid' AND `notifycode` = '$notifycode'";
+            $stmt = mysqli_stmt_init($conn);
+            mysqli_stmt_prepare($stmt, $sql2);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+            header("Location:../index.php?msg=sisaved");
+        }
+    }
+    if (isset($_POST['addsi'])) {
+        session_start();
+        $username = $_SESSION["fname"];
+        $email = $_SESSION["email"];
+        $empid = $_SESSION["emp_id"];
+        $member = 0;
+        if (empty($username)) {
+            header("Location:../index.php");
+        }
+        $smn = $_POST["smn"];
+        $fundname = $_POST["fundname"];
+        $pn = $_POST["pn"];
+        $ein = $_POST["ein"];
+        $eacn = $_POST["eacn"];
+        $usid = $_POST["usid"];
+        $FABN = $_POST["FABN"];
+        $address = $_POST["address"];
+        $sub = $_POST["sub"];
+        $state = $_POST["State"];
+        $zip = $_POST["zip"];
+        $phone = $_POST["phone"];
+        $member = true;
+        require_once '../../includes/dbh.inc.php';
+        require_once '../../includes/functions.inc.php';
+
+        $sql = "SELECT * FROM `super_info` WHERE emp_id = ?;";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+            header("../index.php?error=exist");
+            exit();
+            echo 'here1';
+        }
+        mysqli_stmt_bind_param($stmt, "s", $empid);
+        mysqli_stmt_execute($stmt);
+
+        $resultdata = mysqli_stmt_get_result($stmt);
+        if ($row = mysqli_fetch_assoc($resultdata)) {
+            echo 'here12';
+            header("Location: ../index.php?error=exist");
+        } else {
+
+
+
+
+            $sql = "INSERT INTO `super_info`(`sup_member_num`, `emp_id`, `fund_name`, `policy_number`, `emp_id_number`, `fund_abn`, `fund_address`, `suburb`, `state`, `postcode`, `fund_phone`, `unique_super_id`, `account_name`, `member`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+            $stmt = mysqli_stmt_init($conn);
+
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+                header("Location:../index.php");
+
+
+
+                exit();
+            }
+
+
+            mysqli_stmt_bind_param($stmt, "ssssssssssssss", $smn, $empid,$fundname,$pn,$ein,$FABN,$address,$sub,$state,$zip,$phone,$usid,$eacn,$member);
+            mysqli_stmt_execute($stmt);
+            echo 'herefinal';
+            echo $member;
+            echo $empid;
+            $notifycode = 3;
+
+            $sql2 = "DELETE FROM `notify` WHERE `emp_id` = '$empid' AND `notifycode` = '$notifycode'";
+            $stmt = mysqli_stmt_init($conn);
+            mysqli_stmt_prepare($stmt, $sql2);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+            header("Location:../index.php?msg=siinfosaved");
+        }
+    }
+
+    
+        ?>

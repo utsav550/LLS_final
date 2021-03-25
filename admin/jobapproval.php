@@ -6,7 +6,7 @@ if (isset($_GET["id"])) {
 
     $jempid = $_GET["id"];
 
-    echo $jempid;
+ 
 }
 $Account_name = $BSB = $Account_number = $pay_period =  "No information  Available";
 $Australian_citizen = $Australian_PR  = $Passport_num = $Country_issue = $Working_visa = $visa_type = $sub_class = $visa_grant_number = $Expiry_date = $Hours_of_work =  "No information  Available";
@@ -43,19 +43,19 @@ $rgdate = $row["reg_date"];
 ?>
 <link href="css/jobapp.css" rel="stylesheet" type="text/css">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<div class="container bootdey flex-grow-1 container-p-y">
+<div class="container bootdey flex-grow-1 container-p-y" style="width: 110%;">
 
     <div class="media align-items-center py-3 mb-3">
         <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="d-block ui-w-100 rounded-circle">
         <div class="media-body ml-4">
-            <h4 class="font-weight-bold mb-0"><?php echo $fname . "  " . $lname  ?> <span class="text-muted font-weight-normal">@LLS</span></h4>
+            <h4 class="font-weight-bold mb-0" style="text-transform: uppercase;"><?php echo $fname . "  " . $lname  ?> <span class="text-muted font-weight-normal">@LLS</span></h4>
             <div class="text-muted mb-2">ID: <?php echo $empid; ?></div>
 
 
         </div>
     </div>
 
-    <div class="card mb-4">
+    <div class="card mb-10" style="width: 120%; padding-left:1%; padding-right:3%;">
         <div class="card-body">
             <table class="table user-view-table m-0">
                 <tbody>
@@ -71,7 +71,8 @@ $rgdate = $row["reg_date"];
                     $visafile = file_exists($visapath);
 
                     ?>
-                    <tr>
+                   
+                    <tr style="width: 100%;">
                         <td>Passport Copy:</td>
                         <?php if (empty($passfile)) {
                             echo ' <td><span class="fa fa-times text-light"></span>&nbsp; No</td>';
@@ -80,10 +81,16 @@ $rgdate = $row["reg_date"];
                         }
 
                         ?>
-                        <embed src="<?php echo $passpath; ?>" type="application/pdf" width="50%" height="500px">
-                        <embed src="<?php echo $passpath; ?>" type="application/pdf" width="50%" height="500px">
-
+                        <?php if (empty($visafile) OR (empty($passfile)) ) {
+                            echo'<h3>No Documents Found</h3>';
+                        }
+                        else{
+                        ?>
+                       
+                            <?php } ?>
                     </tr>
+                    <embed src="<?php echo $passpath; ?>" type="application/pdf" width="50%" height="600px">
+                        <embed  src="<?php echo $visapath; ?>" type="application/pdf" width="50%" height="600px">
                     <tr>
                         <td>Visa Copy:</td>
                         <?php if (empty($visafile)) {
@@ -92,6 +99,7 @@ $rgdate = $row["reg_date"];
                             echo '<td><span class="fa fa-check text-primary"></span>&nbsp; Yes</td>';
                         }
                         ?>
+                        
 
                     </tr>
                     <tr>
@@ -113,8 +121,8 @@ $rgdate = $row["reg_date"];
                         <th>Information Check List</th>
                         <th>Personal Information</th>
                         <th>Bank Details</th>
-                        <th>Superannuation Details</th>
                         <th>Visa Details</th>
+                        <th>Superannuation Details</th>
                     </tr>
                     <tr>
                         <td>Status</td>
@@ -139,9 +147,9 @@ $rgdate = $row["reg_date"];
                             $state =  $row["State"];
                             $postcode =  $row["Postcode"];
                             $tfn =  $row["TFN"];
-                            echo '<td><span class="fa fa-check text-primary"></span></td>';
+                            echo '<td style="text-align:center"><span class="fa fa-check text-primary"></span></td>';
                         } else {
-                            echo '<td><span class="fa fa-times text-light"></span></td>';
+                            echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
                         }
 
                         $sql = "SELECT * FROM `bank_details` WHERE emp_id = ?;";
@@ -162,9 +170,9 @@ $rgdate = $row["reg_date"];
                             $Account_number =  $row["Account_number"];
                             $pay_period =  $row["pay_period"];
 
-                            echo '<td><span class="fa fa-check text-primary"></span></td>';
+                            echo '<td style="text-align:center"><span class="fa fa-check text-primary"></span></td>';
                         } else {
-                            echo '<td><span class="fa fa-times text-light"></span></td>';
+                            echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
                         }
                         $sql = "SELECT * FROM `visa_info` WHERE emp_id = ?;";
                         $stmt = mysqli_stmt_init($conn);
@@ -189,9 +197,9 @@ $rgdate = $row["reg_date"];
                             $Expiry_date = $row["Expiry_date"];
                             $Hours_of_work = $row["Hours_of_work"];
 
-                            echo '<td><span class="fa fa-check text-primary"></span></td>';
+                            echo '<td style="text-align:center"><span class="fa fa-check text-primary"></span></td>';
                         } else {
-                            echo '<td><span class="fa fa-times text-light"></span></td>';
+                            echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
                         }
                         $sql = "SELECT * FROM `super_info` WHERE emp_id = ?;";
                         $stmt = mysqli_stmt_init($conn);
@@ -218,9 +226,11 @@ $rgdate = $row["reg_date"];
                             $unique_super_id = $row["unique_super_id"];
                             $account_name = $row["account_name"];
                             $member = $row["member"];
-                            echo '<td><span class="fa fa-check text-primary"></span></td>';
+                            
+                            echo '<td style="text-align:center"><span class="fa fa-check text-primary"></span></td>';
                         } else {
-                            echo '<td><span class="fa fa-times text-light"></span></td>';
+                            $member = "";
+                            echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
                         }
                         ?>
 
@@ -243,6 +253,7 @@ $rgdate = $row["reg_date"];
                             <th>Company aggreement</th>
                             <th>Piecework aggreement</th>
                             <th>Important consideration</th>
+                            <th>Date</th>
                         </tr>
                         <tr>
                             <td>Status</td>
@@ -266,50 +277,57 @@ $rgdate = $row["reg_date"];
                                 $compnayagg = $row["Company_aggreement"];
                                 $piecework = $row["Piecework_aggreement"];
                                 $important = $row["important_consideration"];
+                                $dateagg = $row["Agg_date"];
 
                                 if ($health != null) {
 
-                                    echo '<td><span class="fa fa-check text-primary"></span></td>';
+                                    echo '<td style="text-align:center"><span  class="fa fa-check text-primary"></span></td>';
                                 } else {
-                                    echo '<td><span class="fa fa-times text-light"></span></td>';
+                                    echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
                                 }
                                 if ($fairwork != null) {
 
-                                    echo '<td><span class="fa fa-check text-primary"></span></td>';
+                                    echo '<td style="text-align:center"><span class="fa fa-check text-primary"></span></td>';
                                 } else {
-                                    echo '<td><span class="fa fa-times text-light"></span></td>';
+                                    echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
                                 }
                                 if ($hygine != null) {
 
-                                    echo '<td><span class="fa fa-check text-primary"></span></td>';
+                                    echo '<td style="text-align:center"><span class="fa fa-check text-primary"></span></td>';
                                 } else {
-                                    echo '<td><span class="fa fa-times text-light"></span></td>';
+                                    echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
                                 }
                                 if ($compnayagg != null) {
 
-                                    echo '<td><span class="fa fa-check text-primary"></span></td>';
+                                    echo '<td style="text-align:center"><span class="fa fa-check text-primary"></span></td>';
                                 } else {
-                                    echo '<td><span class="fa fa-times text-light"></span></td>';
+                                    echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
                                 }
                                 if ($piecework != null) {
 
-                                    echo '<td><span class="fa fa-check text-primary"></span></td>';
+                                    echo '<td style="text-align:center"><span class="fa fa-check text-primary"></span></td>';
                                 } else {
-                                    echo '<td><span class="fa fa-times text-light"></span></td>';
+                                    echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
                                 }
                                 if ($important != null) {
 
-                                    echo '<td><span class="fa fa-check text-primary"></span></td>';
+                                    echo '<td style="text-align:center"><span class="fa fa-check text-primary"></span></td>';
                                 } else {
-                                    echo '<td><span class="fa fa-times text-light"></span></td>';
+                                    echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
+                                }
+                                if ($dateagg != null) {
+
+                                    echo '<td style="text-align:center">'.$dateagg.'</td>';
+                                } else {
+                                    echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
                                 }
                             } else {
-                                echo '<td><span class="fa fa-times text-light"></span></td>';
-                                echo '<td><span class="fa fa-times text-light"></span></td>';
-                                echo '<td><span class="fa fa-times text-light"></span></td>';
-                                echo '<td><span class="fa fa-times text-light"></span></td>';
-                                echo '<td><span class="fa fa-times text-light"></span></td>';
-                                echo '<td><span class="fa fa-times text-light"></span></td>';
+                                echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
+                                echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
+                                echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
+                                echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
+                                echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
+                                echo '<td style="text-align:center"><span class="fa fa-times text-light"></span></td>';
                             }
 
                             ?>
@@ -472,7 +490,7 @@ $rgdate = $row["reg_date"];
                         <tr>
                             <td>Superannuation Member ?</td>
                             <td><?php
-                                if ($member == "No information  Available") {
+                                if ($member == 0 OR empty($member)) {
                                     echo "NO";
                                 } else {
                                     echo "YES";
@@ -548,5 +566,10 @@ $rgdate = $row["reg_date"];
         <button type="submit" class="btn btn-secondary" name="decline">Decline</button>
         <button type="submit" class="btn btn-primary" name="approve">Approve</button>
     </div>
-
-    </div>
+   
+    <?php
+include('includes/footer.php');
+    ?>
+ </div>
+    
+    

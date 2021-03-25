@@ -101,15 +101,17 @@ if (empty($username)) {
     <div class="bg-white py-2 collapse-inner rounded">
     
       <h6 class="collapse-header">Form :</h6>
-      <a class="collapse-item" id="piinfo" data-toggle="modal" data-target="#exampleModalCenter">Personal Information</a>
-      <a class="collapse-item" id="piinfo" data-toggle="modal" data-target="#exampleModalCenterbank">Bank Information</a>
-      <a class="collapse-item" id="superinfo" data-toggle="modal" data-target="#exampleModalCentersi">Superannuation Info</a>
-      <a class="collapse-item"id="superinfo" data-toggle="modal" data-target="#exampleModalCentervi">Visa Information</a>
+
+      <a class="collapse-item"  <?php if( $personalinformation != 1) { echo'style="color: red"';} else{echo'style="color: green"';} ?>id="piinfo" data-toggle="<?php  if( $personalinformation == 1) { echo'';} else{ echo 'modal';} ?>" data-target="#exampleModalCenter">Personal Information<?php if( $personalinformation == 1) { echo'<i class="fa fa-lock" aria-hidden="true"></i>';} ?></a>
+      <a class="collapse-item"  <?php if( $bankinfo != 1) { echo'style="color: red"';} else{echo'style="color: green"';} ?>id="piinfo" data-toggle="<?php  if( $bankinfo == 1) { echo'';} else{ echo 'modal';} ?>" data-target="#exampleModalCenterbank">Bank Information <?php if( $bankinfo == 1) { echo'<i class="fa fa-lock" aria-hidden="true"></i>';} ?></a>
+      <a class="collapse-item"  <?php if( $superinfo != 1) { echo'style="color: red"';} else{echo'style="color: green"';} ?>id="superinfo" data-toggle="<?php  if( $superinfo == 1) { echo'';} else{ echo 'modal';} ?>" data-target="#exampleModalCentersi">Superannuation Info  <?php if( $superinfo == 1) { echo'<i class="fa fa-lock" aria-hidden="true"></i>';} ?></a>
+      <a class="collapse-item"  <?php if( $visainfo != 1) { echo'style="color: red"';} else{echo'style="color: green"';} ?>id="piinfo" data-toggle="<?php  if( $visainfo == 1) { echo'';} else{ echo 'modal';} ?>" data-target="#exampleModalCentervi">Visa Information<?php if( $visainfo == 1) { echo'<i class="fa fa-lock" aria-hidden="true"></i>';} ?></a>
+
       <div class="collapse-divider"></div>
       <h6 class="collapse-header">Uploads</h6>
      
-      <a class="collapse-item" <?php if($passfile != 1) { echo'style="color: red"';} ?> class="btn btn-primary" id="superinfo" data-toggle="modal" data-target="#uploadModalpass">Passport Copy</a>
-      <a class="collapse-item"  <?php if($visafile != 1) { echo'style="color: red"';} ?> type="button" class="btn btn-primary" id="superinfo" data-toggle="modal" data-target="#uploadModalvisa">Visa Copy</a>
+      <a class="collapse-item" <?php if($passfile != 1) { echo'style="color: red"';}  else{echo'style="color: green"';}?> class="btn btn-primary" id="superinfo" data-toggle="<?php  if( $passfile == 1) { echo'';} else{ echo 'modal';} ?>" data-target="#uploadModalpass">Passport Copy<?php if( $passfile == 1) { echo'<i class="fa fa-lock" aria-hidden="true"></i>';} ?></a>
+      <a class="collapse-item"  <?php if($visafile != 1) { echo'style="color: red"';}  else{echo'style="color: green"';}?> type="button" class="btn btn-primary" id="superinfo" data-toggle="<?php  if( $visafile == 1) { echo'';} else{ echo 'modal';} ?>" data-target="#uploadModalvisa">Visa Copy <?php if( $visafile == 1) { echo'<i class="fa fa-lock" aria-hidden="true"></i>';} ?></a>
     </div>
   </div>
 </li>
