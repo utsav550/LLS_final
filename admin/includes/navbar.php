@@ -58,6 +58,11 @@ if (empty($username)) {
     <i class="fas fa-fw fa-chart-area"></i>
     <span>Users Profile managment</span></a>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="employees.php">
+    <i class="fas fa-fw fa-chart-area"></i>
+    <span>Current Employees</span></a>
+</li>
 
 
 
@@ -77,21 +82,20 @@ if (empty($username)) {
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
     <i class="fas fa-fw fa-folder"></i>
-    <span>Document</span>
+    <span>Jobs</span>
   </a>
   <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
     
       <h6 class="collapse-header">Form :</h6>
-      <a class="collapse-item" id="piinfo" data-toggle="modal" data-target="#exampleModalCenter">Personal Information</a>
-      <a class="collapse-item" id="piinfo" data-toggle="modal" data-target="#exampleModalCenterbank">Bank Information</a>
-      <a class="collapse-item" id="superinfo" data-toggle="modal" data-target="#exampleModalCentersi">Superannuation Info</a>
-      <a class="collapse-item"id="superinfo" data-toggle="modal" data-target="#exampleModalCentervi">Visa Information</a>
+      <a class="collapse-item" href="addnewjob.php">Add New Jobs</a>
+      <a class="collapse-item" href="managejobs.php">Job Management</a>
+      
       <div class="collapse-divider"></div>
-      <h6 class="collapse-header">Uploads</h6>
+      <h6 class="collapse-header">Notifications </h6>
      
-      <a class="collapse-item" <?php if($passfile != 1) { echo'style="color: red"';} ?> class="btn btn-primary" id="superinfo" data-toggle="modal" data-target="#uploadModalpass">Passport Copy</a>
-      <a class="collapse-item"  <?php if($visafile != 1) { echo'style="color: red"';} ?> type="button" class="btn btn-primary" id="superinfo" data-toggle="modal" data-target="#uploadModalvisa">Visa Copy</a>
+      <a class="collapse-item" href="#">Passport Copy</a>
+      <a class="collapse-item" href="#" >Visa Copy</a>
     </div>
   </div>
 </li>

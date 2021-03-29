@@ -36,6 +36,10 @@ if (isset($_GET["error"])) {
 
 ?>
 
+<script src="https://kit.fontawesome.com/36e858d057.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -53,6 +57,7 @@ if (isset($_GET["error"])) {
     <div class="col-xl-3 col-md-6 mb-4">
       <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
+        <a href="employees.php" style="text-decoration: none;">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Currunt Employee</div>
@@ -67,6 +72,7 @@ if (isset($_GET["error"])) {
             </div>
           </div>
         </div>
+        </a>
       </div>
     </div>
 
@@ -74,15 +80,18 @@ if (isset($_GET["error"])) {
     <div class="col-xl-3 col-md-6 mb-4">
       <div class="card border-left-success shadow h-100 py-2">
         <div class="card-body">
+        <a href="managejobs.php" style="text-decoration: none;">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (weekly)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">$0.00</div>
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Job Management</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo $countemp;        ?>&nbsp; Employees For Next Job </div>
             </div>
             <div class="col-auto">
-              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+            
+              <i class="fas fa-chalkboard-teacher fa-2x text-black-300"></i>
             </div>
           </div>
+          </a>
         </div>
       </div>
     </div>
