@@ -95,11 +95,75 @@ if (isset($_GET["error"])) {
               <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Upcoming Jobs</div>
               <div class="row no-gutters align-items-center">
                 <div class="col-auto">
-                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">No Jobs At The Moment</div>
+                  <?php
+
+                  $date = date('Y-m-d');
+                  $upcoming = date('Y-m-d', strtotime(' + 3 days'));
+                  $sql = "SELECT * FROM `job_decision` WHERE datejob Between'" . $date . "' and  '" . $upcoming . "'";
+
+                  $stmt = mysqli_stmt_init($conn);
+                  if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+                    header("../index.php?error=notready");
+                    exit();
+                  }
+                  mysqli_stmt_prepare($stmt, $sql);
+                  mysqli_stmt_execute($stmt);
+                  $resultdata = mysqli_stmt_get_result($stmt);
+
+                  $countt = mysqli_num_rows($resultdata);
+                  if ($countt == 0) {
+                    echo '<h3>No Upcoming Schedule</h3>';
+                  } else {
+                    $upjobs = 0;
+                    for ($i = 1; $i <= $countt; $i++) {
+                      $row = mysqli_fetch_assoc($resultdata);
+                      $datejob =  $row["datejob"];
+                      $time = $row["time"];
+                      $jobinfo  = $row["job_info"];
+                      $jdid = $row["jd_id"]; {
+                        $sql1 = "SELECT * FROM `job_info` WHERE job_info = $jobinfo";
+                        $stmt1 = mysqli_stmt_init($conn);
+                        if (!mysqli_stmt_prepare($stmt1, $sql1)) {
+
+                          header("../index.php?error=notready");
+                          exit();
+                        }
+                        mysqli_stmt_prepare($stmt1, $sql1);
+                        mysqli_stmt_execute($stmt1);
+                        $resultdata1 = mysqli_stmt_get_result($stmt1);
+                        $roww = mysqli_fetch_assoc($resultdata1);
+                        $jobname  = $roww["name"];
+                        $farm = $roww["farm_name"];
+                      }
+                      $da = unserialize($row['arr_empid']);
+
+                      $cary = count($da);
+                      echo '<td>';
+                      for ($j = 0; $j < $cary; $j++) {
+                        if ($empid == $da[$j]) {
+                          $upjobs++;
+                        }
+                        // echo  '<a href="currentempdetails.php?id='.$da[$j].' style="text-decoration: none;">'.$da[$j] . ',';
+                      }
+                    }
+                  }
+                  ?>
+                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                    <?php
+                    if (empty($upjobs)) {
+                      echo 'No Jobs At The Moment';
+                    } else {
+                      echo $upjobs . ' </br>';
+                    }
+
+
+                    ?>
+                  </div>
                 </div>
                 <div class="col">
                   <div class="progress progress-sm mr-2">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo $upjobs * 10 . '%'; ?>" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 </div>
               </div>
@@ -129,7 +193,180 @@ if (isset($_GET["error"])) {
       </div>
     </div>
   </div>
+  <div class="col-xl col-md-6 mb-4"  style="max-width: 100%">
+      <div class="card border-left-warning shadow h-100 py-2">
+  <div class="card pmd-card">
+    <!-- Card Header -->
+    <div class="card-header pmd-card-border d-flex align-items-start">
+      <div class="media-body">
+        <h2 class="card-title h3">Leave Applications</h2>
+        <p class="card-subtitle">Application of Leave by Employees</p>
+      </div>
+      <a class="btn pmd-ripple-effect btn-outline-primary ml-auto btn-sm" href="leaveapps.php">View All</a>
+    </div>
+    <!-- Card Header End -->
+    <form action="leave.php" method="POST">
+    <!-- Card Body -->
+    <div class="card-body">
+      <div class="body">
+        <div class="table-responsive">
+          <table class="table pmd-table table-hover">
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Leave Type</th>
+                <th>Half Day</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Action</th>
+               
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-transform: uppercase;"><?php echo $fname;?></td>
+                <td><div class="form-group">
+                       
+                       <select id="inputState" name="leavetype" class="form-control" style="width: 135px;" required>
+                       <option >Casual Leave</option>
+                       <option selected >Sick Leave</option>
+                       </select>
+                       </div></td>
+                <td><div class="form-group">
+                       
+                        <select id="inputState" name="halfday" class="form-control" style="width: 80px;" required>
+                        <option >Yes</option>
+                        <option selected >No</option>
+                        </select>
+                        </div></td>
+                <td>
+                  <div class="form-group">
+                  <input type="date" name="strdate"   min ="<?php echo date("Y-m-d"); ?>" class="form-control" id="inputCity" required style="width: 80%;">
+                  </div>
+                </td>
+                <td> <div class="form-group">
+                  <input type="date" name="enddate" class="form-control" id="inputCity" required style="width: 80%;">
+                  </div></td>
+                <td> <div class="form-group">
+                  <input type="text" name="resone" class="form-control" id="inputCity" required style="width: 80%;">
+                  </div></td>
+               
+                <td>--</td>
+                <td>
+                <button type="submit" name="applyleave" class="pmd-btn-fab btn-xs btn-outline-secondary pmd-ripple-effect btn mr-2" style="padding:3%; width:90px; ">Apply </button>
+                  <a href="index.php" title="Reject" class="pmd-btn-fab btn-xs btn-outline-danger pmd-ripple-effect btn">
+                    <i class="material-icons">close</i>
+                  </a>
+                </td>
+              </tr>
+              </form>
+                   
+              <?php 
+              $sql2 = "SELECT * FROM `leave` WHERE emp_id = $empid";
+            
+              $stmt = mysqli_stmt_init($conn);
+             if (!mysqli_stmt_prepare($stmt, $sql2)) {
+  
+                header("../index.php?error=notready");
+                exit();
+              }
+              mysqli_stmt_prepare($stmt, $sql2);
+              mysqli_stmt_execute($stmt);
+              $resultdata = mysqli_stmt_get_result($stmt);
+             $countt = mysqli_num_rows($resultdata);
+             if ($countt == 0) {
+                echo '<h3>No Upcoming Schedule</h3>';
+              } else {?>
+             <tr> <td colspan="8" style="text-align:center; font-size: 23px"> <b> Pending Leave Requests </b> </td></tr>
+   <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Leave Type</th>
+                <th>Half Day</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Action</th>
+               
+                <th></th>
+              </tr>
+            </thead>
 
+                <form action="leave.php" method="POST">
+              <?php
+                
+                for ($i = 1; $i <= $countt; $i++) {
+                  $row = mysqli_fetch_assoc($resultdata);
+                  $reason =  $row["reason"];
+                  $type = $row["type"];
+                  $startdate =  $row["startdate"];
+                $enddate = $row["enddate"];
+                $halfday  =$row["halfday"];
+                $approval = $row["approval"];
+                $reqid = $row["req_id"];
+                if($approval == "pending"){
+                  echo '
+                  <tr>
+                  <td>'.$username.'</td>
+                  <td>'.$type.'</td>
+                  <td>'.$halfday.'</td>
+                  <td>'.$startdate.'</td>
+                  <td>'.$enddate.'</td>
+                  <td>'.$reason.'</td>
+                  
+                  <td>'.$approval.'</td>
+                  <td>
+                 
+                  <a href="leave.php?iddel='. $reqid .'" title="Reject" class="pmd-btn-fab btn-xs btn-outline-danger pmd-ripple-effect btn">
+                  <i class="material-icons">close</i>
+                </a>
+                 
+                  </td>
+                </tr>
+                </form>';
+                }
+                else{
+                 
+                  echo '
+                  <tr>
+                  <td>'.$username.'</td>
+                  <td>'.$type.'</td>
+                  <td>'.$halfday.'</td>
+                  <td>'.$startdate.'</td>
+                  <td>'.$enddate.'</td>
+                  <td>'.$reason.'</td>
+                  
+                  <td>'.$approval.'</td>
+                  
+                </tr>
+  
+                  ';
+
+                }
+               
+               
+                }
+              }
+              echo '  <tr> <td colspan="8" style="text-align:center; font-size: 23px"> <a class="btn pmd-ripple-effect btn-outline-primary ml-auto btn-sm" href="leaveapps.php">View All</a></td></tr>';
+                
+              
+
+
+
+                    ?>
+           
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Card Body End -->
+  </div>
+  </div></div>
   <!-- Content Row -->
 
   <script type="text/javascript">
@@ -292,36 +529,36 @@ if (isset($_GET["error"])) {
 
         <div class="modal-body">
           <form action="includes/scripts.php" method="POST">
-          <label for="inputPassword4">Are you member of any Superannuation Fund?</label>
-          <div class="form-row">
-          <div class="form-group col-md-4">
-          <button type="button" class="btn btn-primary" style="width:100px" id="superinfo" data-toggle="modal"  data-dismiss="modal" data-target="#exampleModalCentermember">Yes!</button>
-            </div>
-            <div class="form-group col-md-4">
-            <button type="submit" class="btn btn-secondary" name="siinfono"  style="width:100px">No</button>
-         
-            </div>
-           
-            
-           
-            
+            <label for="inputPassword4">Are you member of any Superannuation Fund?</label>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <button type="button" class="btn btn-primary" style="width:100px" id="superinfo" data-toggle="modal" data-dismiss="modal" data-target="#exampleModalCentermember">Yes!</button>
+              </div>
+              <div class="form-group col-md-4">
+                <button type="submit" class="btn btn-secondary" name="siinfono" style="width:100px">No</button>
+
+              </div>
+
+
+
+
 
 
             </div>
-           
 
 
-       
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-         
-        </div>
-        </form>
+
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
-<!-------------------------------------------------------------------- super info modal ------------------------------------------------------------------>
+  <!-------------------------------------------------------------------- super info modal ------------------------------------------------------------------>
   <div class="modal fade" id="exampleModalCentermember" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">

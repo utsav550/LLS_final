@@ -60,23 +60,28 @@ $time = '';
   <hr>
   <div class="container-lg">
     <div class="table-responsive">
-        <div class="table-wrapper">
+        <div class="table-wrapper" style="width: 1000px;">
             <div class="table-title">
                 <div class="row">
                    
                     </div>
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Department</th>
-                        <th>Phone</th>
+                        <th>Employees ID</th>
+                        <th>Total</th>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>Job</th>
+                        <th>Farm</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-<?php
+                
+                <?php
+                /*
 
             $date = date('Y-m-d');
             $upcoming = date('Y-m-d', strtotime(' + 3 days'));
@@ -91,8 +96,53 @@ $time = '';
             mysqli_stmt_prepare($stmt, $sql);
             mysqli_stmt_execute($stmt);
             $resultdata = mysqli_stmt_get_result($stmt);
+            $resultdata1 = mysqli_stmt_get_result($stmt);
             $countt = mysqli_num_rows($resultdata);
+           
+           
             echo $countt;
+            
+            $j=0;
+           
+            if ($countt == 0) {
+              echo '<h3>No Upcoming Schedule</h3>';
+            } else {
+              while ($row = mysqli_fetch_assoc($resultdata)) {
+               
+                $da= unserialize($row['arr_empid']);
+                $j++;
+                $cary = count($da);
+                for($i=0;$i<$cary;$i++){
+                 
+                 
+                }
+                echo '</br>';
+               
+              }
+              
+            } */?>
+<?php  
+
+            $date = date('Y-m-d');
+            $upcoming = date('Y-m-d', strtotime(' + 3 days'));
+            $sql = "SELECT * FROM `job_decision` WHERE datejob Between'" . $date . "' and  '" . $upcoming . "'";
+            
+            $stmt = mysqli_stmt_init($conn);
+           if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+              header("../index.php?error=notready");
+              exit();
+            }
+            mysqli_stmt_prepare($stmt, $sql);
+            mysqli_stmt_execute($stmt);
+            $resultdata = mysqli_stmt_get_result($stmt);
+           
+            $countt = mysqli_num_rows($resultdata);
+           
+           
+     
+            
+            
             if ($countt == 0) {
               echo '<h3>No Upcoming Schedule</h3>';
             } else {
@@ -100,22 +150,45 @@ $time = '';
                 $row = mysqli_fetch_assoc($resultdata);
                 $datejob =  $row["datejob"];
                 $time = $row["time"];
-                
-               
-               $member = $row["arr_empid"];
-              }
+                $jobinfo  =$row["job_info"];
+                $jdid = $row["jd_id"];
+                {
+                  $sql1 = "SELECT * FROM `job_info` WHERE job_info = $jobinfo";
+                  $stmt1 = mysqli_stmt_init($conn);
+                  if (!mysqli_stmt_prepare($stmt1, $sql1)) {
+       
+                     header("../index.php?error=notready");
+                     exit();
+                   }
+                   mysqli_stmt_prepare($stmt1, $sql1);
+                   mysqli_stmt_execute($stmt1);
+                   $resultdata1 = mysqli_stmt_get_result($stmt1);
+                   $roww = mysqli_fetch_assoc($resultdata1);
+                   $jobname  =$roww["name"];
+                   $farm = $roww["farm_name"];
+                  }
+                $da= unserialize($row['arr_empid']);
+           
+                $cary = count($da);
+                echo '<td>';
+                for($j=0;$j<$cary;$j++){
+                 echo  '<a href="currentempdetails.php?id='.$da[$j].' style="text-decoration: none;">'.$da[$j] . ',';
+                }
+                echo '</td>';
+                echo  '<td>' .$cary . '</td>';
+                echo  '<td>' .$datejob . '</td>';
+                echo  '<td>' .$time . ' AM </td>';
+                echo  '<td>' .$jobname . '</td>';
+                echo  '<td>' .$farm . '</td>';
+                echo' <td>
+                            
+                <a href="includes/createjob.php?iddelete='.$jdid.' class="delete" title="Delete" style="color: red;" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+            </td> </tr>';
             }
+          }
                 ?>
 
-                    <tr>
-                        <td><?php  echo $member;   ?></td>
-                        <td><?php  echo $datejob;   ?></td>
-                        <td><?php  echo $time;   ?></td>
-                        <td>
-                            
-                            <a class="delete" title="Delete" style="color: red;" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                        </td>
-                    </tr>
+                   
                     
                 </tbody>
             </table>
@@ -124,7 +197,7 @@ $time = '';
 </div>     
 
   <form action="includes/jobdecide.php" method="POST">
-    <div class="form-check">
+    <div class="form-check" >
       <hr>
       <div style="width: 100%;">
         <h2 style="text-align: center;">Allocate Jobs</h2>
@@ -251,7 +324,7 @@ $time = '';
     value="' . $employid . '"
     id="flexCheckDefault"
     name="check_list[]"
-    required
+    
   />
   
     

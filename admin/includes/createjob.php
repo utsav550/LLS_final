@@ -53,5 +53,19 @@ if (isset($_POST["addjob"])) {
             header("Location:../addnewjob.php?msg=addes");
         }
     
+        if (isset($_GET["iddelete"])) {
 
+            $jobiddel = $_GET["iddelete"];
+            $sql = "DELETE FROM `job_decision` WHERE   jd_id = ?;";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+        
+            header("../index.php?error=notready");
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $jobiddel);
+        mysqli_stmt_execute($stmt);
+        header("Location:../managejobs.php?msg=delete"); 
+        }
+      
     

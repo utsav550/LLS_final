@@ -40,8 +40,9 @@ if (isset($_POST['submit'])) { //to run PHP script on submit
                 $i++;
             }
             $emplist = serialize($selected);
+            
 
-            $member = unserialize($emplist);  // ------------------------------------------------------------------Arryyy
+              // ------------------------------------------------------------------Arryyy
             $sql = "INSERT INTO `job_decision`(`datejob`, `job_info`, `time`, `arr_empid`) VALUES (?,?,?,?)";
 
             $stmt = mysqli_stmt_init($conn);
