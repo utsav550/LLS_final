@@ -77,7 +77,7 @@ include('includes/checkdata.php');?>
               
                    
               <?php 
-              $sql2 = "SELECT * FROM `leave` WHERE emp_id = $empid";
+              $sql2 = "SELECT * FROM `leave` WHERE emp_id = $empid ORDER BY startdate DESC";
             
               $stmt = mysqli_stmt_init($conn);
              if (!mysqli_stmt_prepare($stmt, $sql2)) {

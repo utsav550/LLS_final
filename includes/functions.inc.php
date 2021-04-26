@@ -83,9 +83,9 @@ function emailexist($conn, $email) {
     mysqli_stmt_close($stmt);
 }
 
-function createuser($conn, $fname, $lname, $email, $mobile, $pwd) {
+function createuser($conn, $fname, $lname,$dob, $email, $mobile, $pwd) {
 
-    $sql = "INSERT INTO register (`fname`, `lname`, `email`, `mobile`, `password`, `approval`, `reg_date`) VALUES (?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO register (`fname`, `lname`, `email`, `mobile`, `password`, `approval`, `reg_date`,`dob` ) VALUES (?,?,?,?,?,?,?,?)";
 
     $stmt = mysqli_stmt_init($conn);
 
@@ -99,7 +99,7 @@ function createuser($conn, $fname, $lname, $email, $mobile, $pwd) {
     $hashedpwd = password_hash($pwd, PASSWORD_DEFAULT);
     $approval = 'new';
     $regdatenew = date("Y/m/d");
-    mysqli_stmt_bind_param($stmt, "sssssss", $fname, $lname, $email, $mobile, $hashedpwd, $approval,$regdatenew);
+    mysqli_stmt_bind_param($stmt, "ssssssss", $fname, $lname, $email, $mobile, $hashedpwd, $approval,$regdatenew,$dob);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 

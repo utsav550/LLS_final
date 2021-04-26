@@ -44,7 +44,47 @@ if (isset($_GET["error"])) {
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
   </div>
+  <?php 
+  $sql6 = "SELECT * FROM `register` WHERE `emp_id` = $empid";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql6)) {
 
+    header("../index.php?error=notready");
+    exit();
+  }
+  mysqli_stmt_prepare($stmt, $sql6);
+  mysqli_stmt_execute($stmt);
+  $resultdata = mysqli_stmt_get_result($stmt);
+
+  $countt = mysqli_num_rows($resultdata);
+  if ($countt == 0) {
+    echo '<h3>No Upcoming Schedule</h3>';
+  } else {
+    $upjobs = 0;
+    for ($i = 1; $i <= $countt; $i++) {
+      $row = mysqli_fetch_assoc($resultdata);
+      $dob =  $row["dob"];
+      $dob2 = date("d-m", strtotime($dob));
+      $dob3 = date("d-m");
+      if($dob3 == $dob2){
+  echo'
+  <div class="card pmd-card" style="max-width: 100%;margin-bottom:50px; ">
+                <!-- Card hedaer -->
+                <div class="card-header pmd-card-border d-flex">
+                    <i class="pmd-icon-circle icon-circle-48 border border-primary mr-3 md-dark">
+                      
+                            
+                    </i>
+                    <div class="media-body">
+                        <h2 class="card-title h3">Happy Birthday </h2>
+                        <p class="card-subtitle">“The whole team of Lockyer Labour Solution wishes you the happiest of birthdays and a great year.”</p>
+                    </div>
+                </div>
+                </div>';
+    }
+  }
+  }
+                ?>
   <!-- Content Row -->
   <div class="row">
 
@@ -193,6 +233,261 @@ if (isset($_GET["error"])) {
       </div>
     </div>
   </div>
+
+  <!----------------------------------------   jobs ------------------->
+  <div class="col-xl col-md-6 mb-4"  style="max-width: 33%; float: right ">
+      <div class="card border-left-warning shadow h-100 py-2" style="border-left: .25rem solid #Fj4770 !important;">
+  <div class="card pmd-card" style="max-width: 99%; height:600px; margin-bottom:50px; ">
+                
+                <div class="card-header pmd-card-border d-flex">
+                  
+                    <i class="fas fa-clipboard-list fa-2x text-gray-300" style="font-size: 70px; margin-right:10px; color:orangered"></i>
+                    <div class="media-body">
+                    
+                        <h2 class="card-title h3">Upcoming Jobs</h2>
+                        <p class="card-subtitle">List of Jobs </p>
+                    </div>
+                </div>
+                <?php
+$sql3 = "SELECT * FROM `job_decision` WHERE  MONTH(datejob) = MONTH(NOW()) and DAY(datejob) >= DAY(NOW()) ORDER BY DATE_FORMAT(datejob, '%d')";
+$stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $sql3)) {
+
+   header("../index.php?error=notready");
+   exit();
+ }
+ mysqli_stmt_prepare($stmt, $sql3);
+ mysqli_stmt_execute($stmt);
+ $resultdata = mysqli_stmt_get_result($stmt);
+$countt2 = mysqli_num_rows($resultdata);
+if ($countt2 == 0) {
+   echo '<h3>No Upcoming jobs!</h3>';
+ } else {
+   
+
+          for ($i = 1; $i <$countt2; $i++) {
+            
+                $row = mysqli_fetch_assoc($resultdata);
+                echo count($row);
+                echo $countt2;
+                $jdid =  $row["jd_id"];
+                $dobjob =  $row["datejob"];
+                $jobid =  $row["job_info"];
+                $jbemp= unserialize($row['arr_empid']);
+           
+                
+               
+
+                $sql = "SELECT * FROM `job_info` WHERE `job_info` =? ";
+                    $stmt = mysqli_stmt_init($conn);
+                    if (!mysqli_stmt_prepare($stmt, $sql)) {
+                      header("Location:../index.php");
+                      exit();
+                    }
+                    mysqli_stmt_bind_param($stmt, "s", $jobid);
+                    mysqli_stmt_execute($stmt);
+                    $resultdata = mysqli_stmt_get_result($stmt);
+                    $countt = mysqli_num_rows($resultdata);
+                    if ($countt == 0) {
+                      echo '<h3>Not Enough Employees For Job</h3>';
+                    } else {
+                     
+                       
+                        $row = mysqli_fetch_assoc($resultdata);
+                        $farm =  $row["farm_name"];
+                        $loc =  $row["job_location"];
+                        $rate =  $row["pay_rate"];
+                        $paybase =  $row["pay_base"];
+                        $jbname =  $row["name"];
+                      
+                    $cary = count($da);
+                    for($j=0;$j<$cary;$j++){
+                     
+                    if ($empid == $da[$j]) {
+                        echo '
+ 
+                             <li class="list-group-item d-flex flex-row">
+                              <a href="javascript:void(0);" class="pmd-avatar-list-img" title="profile-link">
+                             <img alt="40x40" class="img-fluid" src="https://media.istockphoto.com/vectors/avatar-icon-vector-id1177086178" style="width: 50px; margin-right:15px; ">
+                              </a>
+                               <div class="media-body">
+                               <h3 class="pmd-list-title">'  . $dobjob .' Job:' . $jbname .'</h3>
+                                <p class="pmd-list-subtitle"> Type:&nbsp'. $loc .'&nbsp Farm:&nbsp'. $farm .'</p>
+                              <p class="pmd-list-subtitle"> Pay Rate: &nbsp' . $rate. '</p>
+                               <p class="pmd-list-subtitle"> Pay Base:&nbsp' . $paybase. '</p>
+                               <p class="pmd-list-subtitle"> Team of &nbsp ' . $cary. '</p>
+                               </div>
+                              </li>
+                              
+ ';
+                      } 
+                    }
+                  
+              }
+              }
+   
+ 
+}
+
+
+                    ?>
+               
+                </ul>
+            </div></div></div>
+             <!----------------------------------------   events ------------------->
+  <div class="col-xl col-md-6 mb-4"  style="max-width: 33%; float: right ">
+      <div class="card border-left-warning shadow h-100 py-2" style="border-left: .25rem solid #Ff4770 !important;">
+  <div class="card pmd-card" style="max-width: 99%; height:600px; margin-bottom:50px;   overflow-x: hidden;">
+                
+                <div class="card-header pmd-card-border d-flex">
+                  
+                    <i class="fas fa-clipboard-list fa-2x text-gray-300" style="font-size: 70px; margin-right:10px; color:orangered"></i>
+                    <div class="media-body">
+                    
+                        <h2 class="card-title h3"> Events</h2>
+                        <p class="card-subtitle">List of Events </p>
+                    </div>
+                </div>
+                <?php
+$sql3 = "SELECT * FROM `event` WHERE MONTH(event_date) = MONTH(NOW()) and DAY(event_date) >= DAY(NOW()) ORDER BY DATE_FORMAT(event_date, '%d')";
+$stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $sql3)) {
+
+   header("../index.php?error=notready");
+   exit();
+ }
+ mysqli_stmt_prepare($stmt, $sql3);
+ mysqli_stmt_execute($stmt);
+ $resultdata = mysqli_stmt_get_result($stmt);
+$countt2 = mysqli_num_rows($resultdata);
+if ($countt2 == 0) {
+   echo '<h3>No Upcoming BirthDays!</h3>';
+ } else {
+   
+
+          for ($i = 1; $i <=   $countt2; $i++) {
+                $row = mysqli_fetch_assoc($resultdata);
+                $eveid =  $row["event_id"];
+                $evname =  $row["event_name"];
+                $dob =  $row["event_date"];
+                $dob1 = date( 'j F', strtotime($dob) . date('Y') );
+                $dob2 = date("jS \of F ", strtotime($dob));
+                $evedesc =  $row["event_desc"];
+                $evnumber =  $row["participate_num"];
+                $evtime =  $row["time"];
+                $sql5 = "SELECT * FROM `event_register` WHERE event_id = $eveid";
+                $stmt2 = mysqli_stmt_init($conn);
+                mysqli_stmt_prepare($stmt2, $sql5);
+                mysqli_stmt_execute($stmt2);
+                $resultdata3 = mysqli_stmt_get_result($stmt2);
+               $partinumber = mysqli_num_rows($resultdata3);
+                $sql4 = "SELECT * FROM `event_register` WHERE event_id = $eveid and emp_id = $empid";
+                
+                $stmt1 = mysqli_stmt_init($conn);
+                if (!mysqli_stmt_prepare($stmt1, $sql4)) {
+                
+                   header("../index.php?error=notready");
+                   exit();
+                 }
+                 mysqli_stmt_prepare($stmt1, $sql4);
+                 mysqli_stmt_execute($stmt1);
+                 $resultdata2 = mysqli_stmt_get_result($stmt1);
+                $parti = mysqli_num_rows($resultdata2);
+                    
+                
+                  
+               
+                         
+ echo'
+ 
+ <li class="list-group-item d-flex flex-row">
+
+  <div class="media-body">
+  <h3 class="pmd-list-title"> Event Name:&nbsp' .  $evname .'</h3>
+   <p class="pmd-list-subtitle"> Information:&nbsp </br>'. $evedesc.'</p>
+ <p class="pmd-list-subtitle">  Event Date : &nbsp <b>' .$dob2. '</b></p>
+  <p class="pmd-list-subtitle"> Event Time:&nbsp <b> ' . $evtime. '</b></p>
+  <p class="pmd-list-subtitle"> Number of participants: &nbsp <b>' . $partinumber. ' /' . $evnumber. ' </b> 
+  ';
+  if($parti != 0){
+    echo'
+    <span style="margin-left:25%; "> <a class="btn pmd-ripple-effect btn-outline-primary ml-auto btn-sm" href="#" style="color:green; border-color:green" >Participated </span></a></p>';
+  }else{ echo'
+  <span style="margin-left:25%;"> <a class="btn pmd-ripple-effect btn-outline-primary ml-auto btn-sm" href="../admin/includes/createevent.php?add='.$empid.'&evid='.$eveid.'" >Participate Now! </span></a></p>
+  
+  </div>
+ </li>
+ ';
+  }}
+}
+
+                    ?>
+               
+                </ul>
+            </div></div></div></div>
+<!---------------------------     bdays--------------------->
+<div class="col-xl col-md-6 mb-4"  style="max-width: 33%">
+      <div class="card border-left-warning shadow h-100 py-2" style="border-left: .25rem solid #FF4500 !important;">
+  <div class="card pmd-card" style="max-width: 99%; height:600px; margin-bottom:50px;  overflow: scroll; overflow-x: hidden;">
+                
+                <div class="card-header pmd-card-border d-flex">
+                    <i class="pmd-icon-circle icon-circle-48 border border-primary mr-3 md-dark">
+                    </i>
+                    <i class="fas fa-gifts" style="font-size: 50px; margin-right:10px; color:brown"></i>
+                    <div class="media-body">
+                    
+                        <h2 class="card-title h3">Upcoming Birthdays</h2>
+                        <p class="card-subtitle">List of employees whose birthdays are in this month</p>
+                    </div>
+                </div>
+                <?php
+$sql3 = "SELECT * FROM `register` WHERE MONTH(dob) = MONTH(NOW()) and DAY(dob) >= DAY(NOW()) ORDER BY DATE_FORMAT(dob, '%d')";
+$stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $sql3)) {
+
+   header("../index.php?error=notready");
+   exit();
+ }
+ mysqli_stmt_prepare($stmt, $sql3);
+ mysqli_stmt_execute($stmt);
+ $resultdata = mysqli_stmt_get_result($stmt);
+$countt2 = mysqli_num_rows($resultdata);
+if ($countt2 == 0) {
+   echo '<h3>No Upcoming BirthDays!</h3>';
+ } else {
+   
+
+          for ($i = 1; $i <=   $countt2; $i++) {
+                $row = mysqli_fetch_assoc($resultdata);
+                $iddob =  $row["emp_id"];
+                $dob =  $row["dob"];
+                $dob1 = date( 'j F', strtotime($dob) . date('Y') );
+                $dob2 = date("jS \of F ", strtotime($dob));
+                $dobfname =  $row["fname"];
+                $doblname =  $row["lname"];
+   
+ echo'
+ 
+ <li class="list-group-item d-flex flex-row">
+ <a href="javascript:void(0);" class="pmd-avatar-list-img" title="profile-link">
+     <img alt="40x40" class="img-fluid" src="https://media.istockphoto.com/vectors/avatar-icon-vector-id1177086178" style="width: 50px; margin-right:15px; ">
+ </a>
+ <div class="media-body">
+     <h3 class="pmd-list-title">'.$dobfname .'&nbsp'. $doblname .'</h3>
+     <p class="pmd-list-subtitle">'.$dob2.'</p>
+ </div>
+</li>
+ ';
+}
+}
+
+                    ?>
+               
+                </ul>
+            </div></div></div>
+
+            <!---------------------------   jobs end --------------->
+
   <div class="col-xl col-md-6 mb-4"  style="max-width: 100%">
       <div class="card border-left-warning shadow h-100 py-2">
   <div class="card pmd-card">
@@ -265,7 +560,7 @@ if (isset($_GET["error"])) {
               </form>
                    
               <?php 
-              $sql2 = "SELECT * FROM `leave` WHERE emp_id = $empid";
+              $sql2 = "SELECT * FROM `leave` WHERE emp_id = $empid order by req_id";
             
               $stmt = mysqli_stmt_init($conn);
              if (!mysqli_stmt_prepare($stmt, $sql2)) {

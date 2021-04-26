@@ -3,6 +3,7 @@
 if (isset($_POST["submit"])) {
     $fname = $_POST["fname"];
     $lname = $_POST["lname"];
+    $dob = $_POST["dob"];
     $email = $_POST["email"];
     $mobile = $_POST["mobile"];
     $pwd = $_POST["pwd"];
@@ -14,7 +15,7 @@ if (isset($_POST["submit"])) {
 
 //    input validation and error handler
 
-    if (emptyInputSignup($fname, $email, $lname, $pwd, $repwd, $mobile) !== false) {
+    if (emptyInputSignup($fname, $email, $dob,$lname, $pwd, $repwd, $mobile) !== false) {
 
         header("Location: ../Registration.php?error=emptyinput");
         exit();
@@ -46,7 +47,7 @@ if (isset($_POST["submit"])) {
     }
 
 
-    createuser($conn, $fname, $lname, $email, $mobile, $pwd);
+    createuser($conn, $fname, $lname,$dob, $email, $mobile, $pwd);
 } else {
     header("Location: ../Registration.php?error=some");
 }

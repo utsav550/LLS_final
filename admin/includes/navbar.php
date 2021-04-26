@@ -109,9 +109,14 @@ if (empty($username)) {
 
 <!-- Nav Item - Tables -->
 <li class="nav-item">
-  <a class="nav-link" href="tables.html">
+  <a class="nav-link" href="../admin/notification.php">
     <i class="fas fa-fw fa-table"></i>
-    <span>Tables</span></a>
+    <span>Notifications</span></a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../admin/events.php">
+    <i class="fas fa-fw fa-table"></i>
+    <span>Event Management</span></a>
 </li>
 
 <!-- Divider -->
@@ -235,19 +240,21 @@ if (empty($username)) {
             </li>
             <?php
                   $nc =1;
+                  
                  
-                  $sql = "SELECT * FROM `notify`  WHERE emp_id = ? AND notifycode = ?";
+                  $sql = "SELECT * FROM `notify` where notifycode = ?";
                   $stmt = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
             
                     header("../index.php?error=notready");
                     exit();
                 }
-                mysqli_stmt_bind_param($stmt, "ss", $empid,$nc);
+                mysqli_stmt_bind_param($stmt, "s", $nc);
                 mysqli_stmt_execute($stmt);
             
                 $resultdata = mysqli_stmt_get_result($stmt);
                 $count = mysqli_num_rows($resultdata);
+                
                 ?>
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
@@ -264,14 +271,14 @@ if (empty($username)) {
                 <?php
                   $nc =1;
                  
-                  $sql = "SELECT * FROM `notify`  WHERE emp_id = ? AND notifycode = ?";
+                  $sql = "SELECT * FROM `notify`  WHERE  notifycode = ?  ORDER BY DATE_FORMAT(notify_date, '%d')  DESC";
                   $stmt = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
             
                     header("../index.php?error=notready");
                     exit();
                 }
-                mysqli_stmt_bind_param($stmt, "ss", $empid,$nc);
+                mysqli_stmt_bind_param($stmt, "s",$nc);
                 mysqli_stmt_execute($stmt);
             
                 $resultdata = mysqli_stmt_get_result($stmt);

@@ -56,6 +56,50 @@ if (isset($_POST["addjob"])) {
         if (isset($_GET["iddelete"])) {
 
             $jobiddel = $_GET["iddelete"];
+
+
+
+            
+        $sql = "SELECT * FROM `job_decision` WHERE  jd_id = ?;";
+            
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+        
+            header("../index.php?error=notready");
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $jobiddel);
+        mysqli_stmt_execute($stmt);
+        $resultdata = mysqli_stmt_get_result($stmt);
+       
+        $countt = mysqli_num_rows($resultdata);
+        if ($countt == 0) {
+          echo '<h3>No Upcoming Schedule</h3>';
+        } else {
+          for ($i = 1; $i <= $countt; $i++) {
+            $row = mysqli_fetch_assoc($resultdata);
+            $da= unserialize($row['arr_empid']);
+           
+                $cary = count($da);
+                echo '<td>';
+                for($j=0;$j<$cary;$j++){
+               
+                 $sql = "UPDATE `register` SET `job_ready`= (?) where `emp_id` = $da[$j]";
+
+                 $stmt = mysqli_stmt_init($conn);
+     
+                 if (!mysqli_stmt_prepare($stmt, $sql)) {
+     
+                     header("Location:../index.php?her");
+     
+     
+     
+                     exit();
+                 }
+     $status = "not";
+      mysqli_stmt_bind_param($stmt, "s", $date,);
+                 mysqli_stmt_execute($stmt);
+                }
             $sql = "DELETE FROM `job_decision` WHERE   jd_id = ?;";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -65,7 +109,17 @@ if (isset($_POST["addjob"])) {
         }
         mysqli_stmt_bind_param($stmt, "s", $jobiddel);
         mysqli_stmt_execute($stmt);
-        header("Location:../managejobs.php?msg=delete"); 
-        }
-      
+       
+
+
+                header("Location: ../managejobs.php");
+            }}}
+
+
+
+
+
+
+
+        
     

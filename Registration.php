@@ -69,6 +69,9 @@
                 <label for="lanme"><b>Last Name</b></label>
                 <input type="text" placeholder="Last Name" name="lname" required>
 
+                <label for="dob"><b>Date of Birth</b></label>
+                <input type="date" class="form-control"  style=" width: 260px";id="inputEmail4" name="dob" required>
+
                 <label for="email"><b>Email</b></label>
                 <input type="email" placeholder="Enter Email" name="email" required>
 

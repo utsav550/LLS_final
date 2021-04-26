@@ -25,7 +25,7 @@ if ($row = mysqli_fetch_assoc($resultdata)) {
     $personalinformation = 1;
 } else {
     $personalinformation = 0;
-    $notifycode = 1;
+    $notifycode = 19;
     
     $notification = "Plase upload your Personal information! ";
     $notificationdate = date("Y/m/d");

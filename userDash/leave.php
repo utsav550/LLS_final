@@ -16,7 +16,7 @@ if (isset($_POST['applyleave'])) { //to run PHP script on submit
     $approval = "pending";
 
 
-    $sql = "INSERT INTO `leave`(`emp_id`, `type`, `reason`, `startdate`, `enddate`, `halfday`, `approval`) VALUES (?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO `leave`(`emp_id`, `type`, `reason`, `startdate`, `enddate`, `halfday`, `approval`) VALUES (?,?,?,?,?,?,?) ORDER BY `startdate` ASC";
  $stmt = mysqli_stmt_init($conn);
 if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("Location:../index.php");

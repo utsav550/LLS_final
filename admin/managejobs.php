@@ -138,11 +138,6 @@ $time = '';
             $resultdata = mysqli_stmt_get_result($stmt);
            
             $countt = mysqli_num_rows($resultdata);
-           
-           
-     
-            
-            
             if ($countt == 0) {
               echo '<h3>No Upcoming Schedule</h3>';
             } else {
@@ -200,7 +195,7 @@ $time = '';
     <div class="form-check" >
       <hr>
       <div style="width: 100%;">
-        <h2 style="text-align: center;">Allocate Jobs</h2>
+        <h2 style="text-align: center;">Allocate Jobs For Next Day</h2>
 
         <div class="form-row" style="padding-left:35%;">
           <?php
@@ -266,7 +261,9 @@ $time = '';
         <div class="form-row" style="padding-left: 35%;">
           <div class="form-group col-md-3" style="margin-left:10px;margin-right:20px;">
             <label for="inputCity">Date</label>
-            <input type="date" name="date" class="form-control" id="inputCity" required>
+            <?php 
+            $dateset = date('Y-m-d', strtotime("+1 day")); ?>
+            <input type="date" name="date" class="form-control" id="inputCity" value="<?php echo $dateset; ?>"  required>
           </div>
 
           <div class="form-group col-md-3">
@@ -276,7 +273,7 @@ $time = '';
         </div>
         <h2 style="text-align: center;">Select Employees</h2>
         <hr>
-
+          
 
 
         <div class="contaner" style="padding-left: 2.5rem;
@@ -306,6 +303,7 @@ $time = '';
                 $fname =  $row["fname"];
                 $lname = $row["lname"];
                 $employid = $row["emp_id"];
+                $jobready = $row["job_ready"];
 
                 echo '
     
@@ -313,21 +311,32 @@ $time = '';
     <div class="card" style="width: 10rem; border-radius:2rem; margin:5px">
   <div class="card-body">
   <img src="https://media.istockphoto.com/vectors/avatar-icon-vector-id1177086178" style=" height:70px; width:70px; margin:3% 79% 3% 20%; border-radius: 50%">
-    <h5 class="card-title" style="text-align:left; text-transform:uppercase; ">' . $fname . '&nbsp' . $lname . '</h5>
+    <h5 class="card-title" style="text-align:center; text-transform:uppercase;  font-size: 13px;">' . $fname . '&nbsp' . $lname . '</h5>
     <div class="form-check">
+    
     <h6 style="text-align:center">ID:
-    ' . $employid . '</h6>
+    ' . $employid . '</h6>';
+    $datea = date('Y-m-d', strtotime("+1 day"));
+    if($datea != $jobready){
+      echo'
   <input
-  style="margin-left:30%"
+  style="margin-left:30%; margin-top: -2px; text-align:center"
+  
     class="form-check-input"
     type="checkbox"
     value="' . $employid . '"
     id="flexCheckDefault"
     name="check_list[]"
     
-  />
-  
-    
+  />';
+    }
+    else{
+      echo'
+      <h6 style="text-align:center">
+    Allocated </h6>';
+
+    }
+    echo'
 </div>
     
   </div>
@@ -339,7 +348,7 @@ $time = '';
           </div>
         </div>
         <hr>
-        <button type="submit" name="submit" class="btn btn-xs btn-outline btn-primary" style="padding:1%; margin-left:45%">Release Schedule </i> </button>
+        <button type="submit" name="submit" class="btn btn-xs btn-outline btn-primary" style="padding:1%; margin-left:45%; ">Release Schedule </i> </button>
   </form>
 </body>
 

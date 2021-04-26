@@ -31,7 +31,7 @@ include_once 'includes/dbh.inc.php';
         <a href="index.php" class="active" id="first">Home</a>
         <a href="Log-in.php">Log-in</a>
         <a href="gallery.php">Gallery</a>
-        <a href="Registration.php">Apply</a>
+        <a href="Registration.php">Apply for Jobs</a>
         <a href="#contact">Contact</a>
         <a href="#about">About</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">

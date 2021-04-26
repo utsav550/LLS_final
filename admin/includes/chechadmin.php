@@ -28,11 +28,26 @@ $countt = mysqli_num_rows($resultdata);
 
 
 //--------------------------------------------------------------------check employee number info 
+$app3 = "Approved";
+$datea = date('Y-m-d', strtotime("+1 day"));
+$countemp =0;
+$sqlu = "SELECT * FROM `register` WHERE approval = ? ";
+$stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $sqlu)) {
+
+    header("../index.php?error=notready");
+    exit();
+}
+mysqli_stmt_bind_param($stmt, "s", $app3);
+mysqli_stmt_execute($stmt);
+
+$resultdata = mysqli_stmt_get_result($stmt);
+$countemp = mysqli_num_rows($resultdata);
 
 $app3 = "Approved";
-
-$countemp =0;
-$sql = "SELECT * FROM `register` WHERE approval = ? ";
+$datea = date('Y-m-d', strtotime("+1 day"));
+$countempi =0;
+$sql = "SELECT * FROM `register` WHERE approval = ? and `job_ready` = $datea ";
 $stmt = mysqli_stmt_init($conn);
 if (!mysqli_stmt_prepare($stmt, $sql)) {
 
@@ -43,7 +58,7 @@ mysqli_stmt_bind_param($stmt, "s", $app3);
 mysqli_stmt_execute($stmt);
 
 $resultdata = mysqli_stmt_get_result($stmt);
-$countemp = mysqli_num_rows($resultdata);
+$countempi = mysqli_num_rows($resultdata);
 
 
 //-----------------fatching job applications

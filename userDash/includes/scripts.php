@@ -97,16 +97,12 @@
                 $stmt = mysqli_stmt_init($conn);
 
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
-
-                    header("Location:../index.php");
-
-
-
-                    exit();
+                     header("Location:../index.php");
+                        exit();
                 }
 
                 $emt = '';
-                $notifycode = 1;
+                $notifycode = 19;
                 mysqli_stmt_bind_param($stmt, "sssssssssss", $empid, $commdate, $gender,  $dob, $address, $sub, $state, $zip, $tfn, $emt, $emt);
                 mysqli_stmt_execute($stmt);
                 $sql2 = "DELETE FROM `notify` WHERE `emp_id` = '$empid' AND `notifycode` = '$notifycode'";
@@ -114,6 +110,9 @@
                 mysqli_stmt_prepare($stmt, $sql2);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
+
+
+                
 
                 header("Location:../index.php?msg=pisaved");
             }
